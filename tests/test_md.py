@@ -27,7 +27,9 @@ def spi(md_front, broker, user, password):
             time.sleep(1)
         else:
             break    
-    return _spi
+    yield _spi
+    _spi.api.RegisterSpi(None)
+    _spi.api.Release()
 
 
 class MdSpi(ctp.CThostFtdcMdSpi):
@@ -89,11 +91,6 @@ class MdSpi(ctp.CThostFtdcMdSpi):
     def OnRtnDepthMarketData(self, pDepthMarketData: 'CThostFtdcDepthMarketDataField'):
         print("OnRtnDepthMarketData:", pDepthMarketData)
         self.data = pDepthMarketData            
-
-    def __del__(self):
-        self.api.RegisterSpi(None)
-        self.api.Release()
-
 
 def test_init(spi):
     assert spi.connected and spi.loggedin

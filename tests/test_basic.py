@@ -68,6 +68,59 @@ class TestApiCreation:
         assert ctp.CThostFtdcTraderApi.GetApiVersion() is not None
 
 
+class TestDataStructures:
+    def test_depth_market_data_field(self):
+        """Verify DepthMarketDataField can be created and fields assigned."""
+        field = ctp.CThostFtdcDepthMarketDataField()
+        field.InstrumentID = "IF2603"
+        field.LastPrice = 3800.0
+        field.Volume = 12345
+        field.BidPrice1 = 3799.8
+        field.AskPrice1 = 3800.2
+        field.BidVolume1 = 10
+        field.AskVolume1 = 20
+        assert field.InstrumentID == "IF2603"
+        assert field.LastPrice == 3800.0
+        assert field.Volume == 12345
+        assert field.BidPrice1 == 3799.8
+        assert field.AskPrice1 == 3800.2
+
+    def test_float_max_displayed_as_none(self):
+        """Verify that float_info.max fields show as None in repr."""
+        from sys import float_info
+        field = ctp.CThostFtdcDepthMarketDataField()
+        field.LastPrice = float_info.max
+        r = repr(field)
+        assert "LastPrice: None" in r
+
+    def test_order_field(self):
+        """Verify InputOrderField can be populated."""
+        field = ctp.CThostFtdcInputOrderField()
+        field.BrokerID = "9999"
+        field.InvestorID = "test"
+        field.InstrumentID = "IF2603"
+        field.Direction = "0"  # Buy
+        field.CombOffsetFlag = "0"  # Open
+        field.LimitPrice = 3800.0
+        field.VolumeTotalOriginal = 1
+        assert field.BrokerID == "9999"
+        assert field.InstrumentID == "IF2603"
+        assert field.LimitPrice == 3800.0
+        assert field.VolumeTotalOriginal == 1
+
+    def test_rsp_info_field(self):
+        """Verify RspInfoField error fields."""
+        field = ctp.CThostFtdcRspInfoField()
+        field.ErrorID = 0
+        field.ErrorMsg = "test msg"
+        assert field.ErrorID == 0
+        assert field.ErrorMsg == "test msg"
+
+
+@pytest.mark.skipif(
+    not os.environ.get('CTP_BROKER_ID'),
+    reason="No .env configured (CTP_BROKER_ID not set)"
+)
 class TestEnvConfig:
     def test_env_loaded(self):
         """Verify .env is loaded and at least CTP_BROKER_ID is set."""

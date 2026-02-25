@@ -1,7 +1,49 @@
+name: Build & Test
+
 on:
   workflow_dispatch:
+  push:
+    branches: [master]
+    paths:
+      - 'ctp.i'
+      - 'setup.py'
+      - 'ctp/**'
+      - 'tests/**'
 
 jobs:
+  test_basic:
+    name: Basic Tests
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        python-version: ["3.11"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install swig (macOS)
+        if: matrix.os == 'macos-latest'
+        run: brew install swig
+        env:
+          HOMEBREW_NO_AUTO_UPDATE: 1
+
+      - name: Install swig (Linux)
+        if: matrix.os == 'ubuntu-latest'
+        run: sudo apt-get install -y swig
+
+      - name: Build and install
+        run: pip install .
+
+      - name: Install test deps
+        run: pip install pytest python-dotenv
+
+      - name: Run offline tests
+        run: python -m pytest tests/test_basic.py -v --tb=short
+
   build_unix:
     runs-on: ${{ matrix.os }}
     strategy:
@@ -11,7 +53,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
@@ -35,9 +77,9 @@ jobs:
           # Skip delocate for macOS builds
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: ""
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
-          name: ctp-python
+          name: ctp-python-${{ matrix.os }}-${{ matrix.version }}
           path: ./dist/*.whl
 
   build_win:
@@ -67,7 +109,7 @@ jobs:
       - name: Build wheel for Windows
         run: python -m build -w -n
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
-          name: ctp-python
+          name: ctp-python-windows-${{ matrix.python-version }}
           path: ./dist/*.whl

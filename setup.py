@@ -169,7 +169,7 @@ try:
         description="""CTP for python""",
         long_description=readme,
         long_description_content_type="text/markdown",
-        url="https://github.com/keli/ctp-python",
+        url="https://github.com/cloudQuant/ctp-python",
         ext_modules=[CTP_EXT],
         packages=["ctp"],  # Define ctp as a package
         package_data={"ctp": package_data},

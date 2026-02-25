@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ctp-python"
+dynamic = ["version"]
+description = "CTP (Comprehensive Transaction Platform) Python bindings via SWIG"
+readme = "README.md"
+license = {text = "BSD"}
+requires-python = ">=3.7"
+authors = [
+    {name = "Keli Hu", email = "dev@keli.hu"},
+]
+classifiers = [
+    "License :: OSI Approved :: BSD License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: Implementation :: CPython",
+]
+
+[project.urls]
+Homepage = "https://github.com/cloudQuant/ctp-python"
+Documentation = "https://cloudquant.github.io/ctp-python/"
+Repository = "https://github.com/cloudQuant/ctp-python"
+"Original Repository" = "https://github.com/keli/ctp-python"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "python-dotenv>=1.0",
+    "mkdocs>=1.5",
+    "mkdocs-material>=9.0",
+]

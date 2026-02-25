@@ -29,7 +29,9 @@ def spi(td_front, broker, user, password, app_id, auth):
             time.sleep(1)
         else:
             break    
-    return _spi
+    yield _spi
+    _spi.api.RegisterSpi(None)
+    _spi.api.Release()
 
 
 class TraderSpi(ctp.CThostFtdcTraderSpi):
@@ -104,10 +106,47 @@ class TraderSpi(ctp.CThostFtdcTraderSpi):
     def OnRspError(self, pRspInfo:'CThostFtdcRspInfoField', nRequestID:'int', bIsLast:'bool'):
         print("OnRspError:", pRspInfo.ErrorID, pRspInfo.ErrorMsg)
 
-    def __del__(self):
-        self.api.RegisterSpi(None)
-        self.api.Release()
-
-
 def test_init(spi):
     assert spi.connected and spi.authed and spi.loggedin    
+
+
+def test_settlement_confirm(spi):
+    """Test settlement info confirmation after login."""
+    field = ctp.CThostFtdcSettlementInfoConfirmField()
+    field.BrokerID = spi.broker_id
+    field.InvestorID = spi.user_id
+    spi.request_id += 1
+    ret = spi.api.ReqSettlementInfoConfirm(field, spi.request_id)
+    assert ret == 0, f"ReqSettlementInfoConfirm returned {ret}"
+    time.sleep(2)
+
+
+def test_query_instrument(spi):
+    """Test querying instrument info."""
+    field = ctp.CThostFtdcQryInstrumentField()
+    field.InstrumentID = "IF2603"
+    spi.request_id += 1
+    ret = spi.api.ReqQryInstrument(field, spi.request_id)
+    assert ret == 0, f"ReqQryInstrument returned {ret}"
+    time.sleep(2)
+
+
+def test_query_account(spi):
+    """Test querying trading account."""
+    field = ctp.CThostFtdcQryTradingAccountField()
+    field.BrokerID = spi.broker_id
+    field.InvestorID = spi.user_id
+    spi.request_id += 1
+    ret = spi.api.ReqQryTradingAccount(field, spi.request_id)
+    assert ret == 0, f"ReqQryTradingAccount returned {ret}"
+    time.sleep(2)
+
+
+def test_query_position(spi):
+    """Test querying investor position."""
+    field = ctp.CThostFtdcQryInvestorPositionField()
+    field.BrokerID = spi.broker_id
+    field.InvestorID = spi.user_id
+    spi.request_id += 1
+    ret = spi.api.ReqQryInvestorPosition(field, spi.request_id)
+    assert ret == 0, f"ReqQryInvestorPosition returned {ret}"
