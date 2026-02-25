@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#source-tree-analysis-ctp-python" class="md-skip">
+        <a href="#_1" class="md-skip">
           跳转至
         </a>
       
@@ -695,10 +695,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#directory-structure" class="md-nav__link">
+  <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Directory Structure
+        目录结构
       
     </span>
   </a>
@@ -706,10 +706,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#critical-files" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Critical Files
+        关键文件
       
     </span>
   </a>
@@ -717,10 +717,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#entry-points" class="md-nav__link">
+  <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Entry Points
+        入口点
       
     </span>
   </a>
@@ -728,10 +728,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#generated-files-not-in-repo" class="md-nav__link">
+  <a href="#_5" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Generated Files (not in repo)
+        构建生成文件（不在仓库中）
       
     </span>
   </a>
@@ -809,10 +809,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#directory-structure" class="md-nav__link">
+  <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Directory Structure
+        目录结构
       
     </span>
   </a>
@@ -820,10 +820,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#critical-files" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Critical Files
+        关键文件
       
     </span>
   </a>
@@ -831,10 +831,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#entry-points" class="md-nav__link">
+  <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Entry Points
+        入口点
       
     </span>
   </a>
@@ -842,10 +842,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#generated-files-not-in-repo" class="md-nav__link">
+  <a href="#_5" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Generated Files (not in repo)
+        构建生成文件（不在仓库中）
       
     </span>
   </a>
@@ -872,100 +872,116 @@
   
 
 
-<h1 id="source-tree-analysis-ctp-python">Source Tree Analysis: ctp-python<a class="headerlink" href="#source-tree-analysis-ctp-python" title="Permanent link">&para;</a></h1>
-<p><strong>Generated:</strong> 2026-02-25</p>
-<h2 id="directory-structure">Directory Structure<a class="headerlink" href="#directory-structure" title="Permanent link">&para;</a></h2>
+<h1 id="_1">源码结构<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<p><strong>更新日期:</strong> 2026-02-25</p>
+<h2 id="_2">目录结构<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>ctp-python/
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>├── .env                    # Environment config (SimNow credentials, not committed)
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>├── .env.example            # Template for .env with documentation
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>├── .gitignore              # Git ignore rules
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>├── .env                    # 环境变量配置（SimNow 账号，不提交到 git）
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>├── .env.example            # .env 模板（含说明文档）
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>├── .gitignore              # Git 忽略规则
 </span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>├── .github/
 </span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>│   └── workflows/
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>│       └── build_wheels.yml  # CI: cross-platform wheel builds via cibuildwheel
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>├── LICENSE                 # BSD License
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>├── README.md               # Primary documentation (Chinese)
-</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>├── setup.py                # ★ Build system: SWIG compilation + platform-specific linking
-</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>├── ctp.i                   # ★ SWIG interface definition (directors, typemaps, GBK→UTF-8)
-</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>│
-</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>├── ctp/                    # Python package (source, pre-build)
-</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>│   └── __init__.py         # Imports from _ctp (C extension) and ctp (SWIG Python)
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>│       ├── build_wheels.yml  # CI：跨平台 wheel 构建（cibuildwheel）
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>│       └── docs.yml          # CI：自动部署文档到 GitHub Pages
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>├── LICENSE                 # BSD 许可证
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>├── README.md               # 项目文档（中文）
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>├── README_EN.md            # 项目文档（英文）
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>├── mkdocs.yml              # MkDocs 文档站点配置
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>├── setup.py                # ★ 构建系统：SWIG 编译 + 平台特定链接
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>├── ctp.i                   # ★ SWIG 接口定义（Director、类型映射、GBK→UTF-8）
 </span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>│
-</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>├── api/                    # CTP C++ SDK native libraries (multiple versions)
-</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>│   ├── 6.3.13/             # Legacy version
-</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>│   ├── 6.3.15/             # Legacy version
-</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>│   ├── 6.5.1/              # Legacy version
-</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>│   ├── 6.5.1.c/            # Evaluation version
-</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>│   ├── 6.6.1/              # Legacy version
-</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>│   ├── 6.6.1.c/            # Evaluation version
-</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>│   ├── 6.6.9/              # Production version
-</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>│   │   ├── darwin/          # macOS static libraries
-</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>│   │   ├── linux/           # Linux shared objects
-</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>│   │   └── windows/         # Windows DLLs
-</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>│   ├── 6.6.9.c/            # Evaluation version
-</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>│   └── 6.7.7/              # ★ Default version (latest)
-</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>│       ├── darwin/          # macOS frameworks (arm64 + x86_64)
-</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>│       │   ├── thostmduserapi_se.framework/   # Market Data native lib
-</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>│       │   └── thosttraderapi_se.framework/   # Trading native lib
-</span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>│       ├── linux/           # Linux .so shared libraries
-</span><span id="__span-0-33"><a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>│       └── windows/         # Windows .dll libraries
-</span><span id="__span-0-34"><a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>│
-</span><span id="__span-0-35"><a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>├── tests/                  # Test suite
-</span><span id="__span-0-36"><a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>│   ├── conftest.py         # Shared fixtures, .env loading, network checks
-</span><span id="__span-0-37"><a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>│   ├── test_basic.py       # ★ Offline unit tests (no network required)
-</span><span id="__span-0-38"><a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a>│   ├── test_md.py          # Integration: Market data API tests (requires SimNow)
-</span><span id="__span-0-39"><a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a>│   └── test_trader.py      # Integration: Trading API tests (requires SimNow)
-</span><span id="__span-0-40"><a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a>│
-</span><span id="__span-0-41"><a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a>└── docs/                   # Project documentation (generated)
-</span><span id="__span-0-42"><a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a>    ├── index.md
-</span><span id="__span-0-43"><a id="__codelineno-0-43" name="__codelineno-0-43" href="#__codelineno-0-43"></a>    ├── project-overview.md
-</span><span id="__span-0-44"><a id="__codelineno-0-44" name="__codelineno-0-44" href="#__codelineno-0-44"></a>    ├── architecture.md
-</span><span id="__span-0-45"><a id="__codelineno-0-45" name="__codelineno-0-45" href="#__codelineno-0-45"></a>    ├── source-tree-analysis.md
-</span><span id="__span-0-46"><a id="__codelineno-0-46" name="__codelineno-0-46" href="#__codelineno-0-46"></a>    └── development-guide.md
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>├── ctp/                    # Python 包（源码）
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>│   └── __init__.py         # 包入口：从 _ctp（C 扩展）和 ctp（SWIG Python）导入
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>│
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>├── api/                    # CTP C++ SDK 原生库（多版本）
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>│   ├── 6.3.13/             # 旧版
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>│   ├── 6.3.15/             # 旧版
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>│   ├── 6.5.1/              # 旧版
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>│   ├── 6.5.1.c/            # 测评版
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>│   ├── 6.6.1/              # 旧版
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>│   ├── 6.6.1.c/            # 测评版
+</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>│   ├── 6.6.9/              # 生产版
+</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>│   │   ├── darwin/          # macOS 静态库
+</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>│   │   ├── linux/           # Linux 共享库
+</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>│   │   └── windows/         # Windows DLL
+</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>│   ├── 6.6.9.c/            # 测评版
+</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>│   └── 6.7.7/              # ★ 默认版本（最新）
+</span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>│       ├── darwin/          # macOS 框架（arm64 + x86_64）
+</span><span id="__span-0-33"><a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>│       │   ├── thostmduserapi_se.framework/   # 行情原生库
+</span><span id="__span-0-34"><a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>│       │   └── thosttraderapi_se.framework/   # 交易原生库
+</span><span id="__span-0-35"><a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>│       ├── linux/           # Linux .so 共享库
+</span><span id="__span-0-36"><a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>│       └── windows/         # Windows .dll 动态库
+</span><span id="__span-0-37"><a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>│
+</span><span id="__span-0-38"><a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a>├── examples/               # 示例脚本
+</span><span id="__span-0-39"><a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a>│   ├── README.md            # 示例说明
+</span><span id="__span-0-40"><a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a>│   ├── md_demo.py           # 行情接收示例
+</span><span id="__span-0-41"><a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a>│   └── trader_demo.py       # 交易接口示例
+</span><span id="__span-0-42"><a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a>│
+</span><span id="__span-0-43"><a id="__codelineno-0-43" name="__codelineno-0-43" href="#__codelineno-0-43"></a>├── tests/                  # 测试套件
+</span><span id="__span-0-44"><a id="__codelineno-0-44" name="__codelineno-0-44" href="#__codelineno-0-44"></a>│   ├── conftest.py         # 共享 fixtures、.env 加载、网络检查
+</span><span id="__span-0-45"><a id="__codelineno-0-45" name="__codelineno-0-45" href="#__codelineno-0-45"></a>│   ├── test_basic.py       # ★ 离线单元测试（无需网络）
+</span><span id="__span-0-46"><a id="__codelineno-0-46" name="__codelineno-0-46" href="#__codelineno-0-46"></a>│   ├── test_md.py          # 集成测试：行情连接 + 订阅
+</span><span id="__span-0-47"><a id="__codelineno-0-47" name="__codelineno-0-47" href="#__codelineno-0-47"></a>│   └── test_trader.py      # 集成测试：交易连接 + 认证
+</span><span id="__span-0-48"><a id="__codelineno-0-48" name="__codelineno-0-48" href="#__codelineno-0-48"></a>│
+</span><span id="__span-0-49"><a id="__codelineno-0-49" name="__codelineno-0-49" href="#__codelineno-0-49"></a>└── docs/                   # 项目文档
+</span><span id="__span-0-50"><a id="__codelineno-0-50" name="__codelineno-0-50" href="#__codelineno-0-50"></a>    ├── index.md             # 文档首页索引
+</span><span id="__span-0-51"><a id="__codelineno-0-51" name="__codelineno-0-51" href="#__codelineno-0-51"></a>    ├── tutorial.md          # 使用教程（10章）
+</span><span id="__span-0-52"><a id="__codelineno-0-52" name="__codelineno-0-52" href="#__codelineno-0-52"></a>    ├── api-reference-md.md  # 行情接口 API 参考
+</span><span id="__span-0-53"><a id="__codelineno-0-53" name="__codelineno-0-53" href="#__codelineno-0-53"></a>    ├── api-reference-trader.md  # 交易接口 API 参考
+</span><span id="__span-0-54"><a id="__codelineno-0-54" name="__codelineno-0-54" href="#__codelineno-0-54"></a>    ├── project-overview.md  # 项目概览
+</span><span id="__span-0-55"><a id="__codelineno-0-55" name="__codelineno-0-55" href="#__codelineno-0-55"></a>    ├── architecture.md      # 架构设计
+</span><span id="__span-0-56"><a id="__codelineno-0-56" name="__codelineno-0-56" href="#__codelineno-0-56"></a>    ├── source-tree-analysis.md  # 源码结构（本文件）
+</span><span id="__span-0-57"><a id="__codelineno-0-57" name="__codelineno-0-57" href="#__codelineno-0-57"></a>    └── development-guide.md # 开发指南
 </span></code></pre></div>
-<h2 id="critical-files">Critical Files<a class="headerlink" href="#critical-files" title="Permanent link">&para;</a></h2>
+<h2 id="_3">关键文件<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
-<th>File</th>
-<th>Purpose</th>
+<th>文件</th>
+<th>用途</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>setup.py</code></td>
-<td>Build orchestrator: detects platform, configures SWIG, links native libs</td>
+<td>构建编排：检测平台、配置 SWIG、链接原生库</td>
 </tr>
 <tr>
 <td><code>ctp.i</code></td>
-<td>SWIG interface: defines Python bindings, director callbacks, GBK→UTF-8 typemaps</td>
+<td>SWIG 接口：定义 Python 绑定、Director 回调、GBK→UTF-8 类型映射</td>
 </tr>
 <tr>
 <td><code>ctp/__init__.py</code></td>
-<td>Package entry point: re-exports all symbols from <code>_ctp</code> and <code>ctp</code> modules</td>
+<td>包入口点：重新导出 <code>_ctp</code> 和 <code>ctp</code> 模块的所有符号</td>
 </tr>
 <tr>
 <td><code>api/6.7.7/</code></td>
-<td>Default CTP SDK native libraries for all platforms</td>
+<td>默认 CTP SDK 原生库（全平台）</td>
 </tr>
 <tr>
 <td><code>tests/conftest.py</code></td>
-<td>Test configuration: loads <code>.env</code>, provides fixtures, network checks</td>
+<td>测试配置：加载 <code>.env</code>、提供 fixtures、网络检查</td>
+</tr>
+<tr>
+<td><code>mkdocs.yml</code></td>
+<td>MkDocs 文档站点配置（Material 主题、中文搜索）</td>
 </tr>
 </tbody>
 </table>
-<h2 id="entry-points">Entry Points<a class="headerlink" href="#entry-points" title="Permanent link">&para;</a></h2>
+<h2 id="_4">入口点<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Build</strong>: <code>python setup.py install</code> or <code>pip install .</code></li>
-<li><strong>Import</strong>: <code>import ctp</code> (loads <code>ctp/__init__.py</code> → <code>_ctp.so</code> + <code>ctp.py</code>)</li>
-<li><strong>Test</strong>: <code>python -m pytest tests/</code></li>
+<li><strong>构建</strong>：<code>python setup.py install</code> 或 <code>pip install .</code></li>
+<li><strong>导入</strong>：<code>import ctp</code>（加载 <code>ctp/__init__.py</code> → <code>_ctp.so</code> + <code>ctp.py</code>）</li>
+<li><strong>测试</strong>：<code>python -m pytest tests/</code></li>
+<li><strong>文档</strong>：<code>mkdocs serve</code>（本地预览）或 <code>mkdocs gh-deploy</code>（部署）</li>
 </ul>
-<h2 id="generated-files-not-in-repo">Generated Files (not in repo)<a class="headerlink" href="#generated-files-not-in-repo" title="Permanent link">&para;</a></h2>
-<p>These files are generated during the build process:</p>
+<h2 id="_5">构建生成文件（不在仓库中）<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<p>以下文件在构建过程中自动生成：</p>
 <ul>
-<li><code>ctp_wrap.cpp</code> — SWIG-generated C++ wrapper</li>
-<li><code>ctp_wrap.h</code> — SWIG-generated C++ header</li>
-<li><code>ctp.py</code> — SWIG-generated Python module (moved to <code>ctp/ctp.py</code> during build)</li>
-<li><code>ctp/_ctp.cpython-3XX-*.so</code> — Compiled C extension</li>
+<li><code>ctp_wrap.cpp</code> — SWIG 生成的 C++ 封装代码</li>
+<li><code>ctp_wrap.h</code> — SWIG 生成的 C++ 头文件</li>
+<li><code>ctp.py</code> — SWIG 生成的 Python 模块（构建时移动到 <code>ctp/ctp.py</code>）</li>
+<li><code>ctp/_ctp.cpython-3XX-*.so</code> — 编译后的 C 扩展</li>
 </ul>
 
 

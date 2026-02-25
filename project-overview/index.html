@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#project-overview-ctp-python" class="md-skip">
+        <a href="#_1" class="md-skip">
           跳转至
         </a>
       
@@ -639,10 +639,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#executive-summary" class="md-nav__link">
+  <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Executive Summary
+        概述
       
     </span>
   </a>
@@ -650,10 +650,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#key-features" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Key Features
+        核心特性
       
     </span>
   </a>
@@ -661,10 +661,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#technology-stack" class="md-nav__link">
+  <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Technology Stack
+        技术栈
       
     </span>
   </a>
@@ -672,10 +672,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#architecture-pattern" class="md-nav__link">
+  <a href="#_5" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Architecture Pattern
+        架构模式
       
     </span>
   </a>
@@ -683,10 +683,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#target-users" class="md-nav__link">
+  <a href="#_6" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Target Users
+        目标用户
       
     </span>
   </a>
@@ -820,10 +820,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#executive-summary" class="md-nav__link">
+  <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Executive Summary
+        概述
       
     </span>
   </a>
@@ -831,10 +831,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#key-features" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Key Features
+        核心特性
       
     </span>
   </a>
@@ -842,10 +842,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#technology-stack" class="md-nav__link">
+  <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Technology Stack
+        技术栈
       
     </span>
   </a>
@@ -853,10 +853,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#architecture-pattern" class="md-nav__link">
+  <a href="#_5" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Architecture Pattern
+        架构模式
       
     </span>
   </a>
@@ -864,10 +864,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#target-users" class="md-nav__link">
+  <a href="#_6" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Target Users
+        目标用户
       
     </span>
   </a>
@@ -894,93 +894,93 @@
   
 
 
-<h1 id="project-overview-ctp-python">Project Overview: ctp-python<a class="headerlink" href="#project-overview-ctp-python" title="Permanent link">&para;</a></h1>
-<p><strong>Generated:</strong> 2026-02-25<br />
-<strong>Project Type:</strong> Library (Python C Extension)<br />
-<strong>Repository Type:</strong> Monolith</p>
-<h2 id="executive-summary">Executive Summary<a class="headerlink" href="#executive-summary" title="Permanent link">&para;</a></h2>
-<p>ctp-python is a Python binding for the official CTP (Comprehensive Transaction Platform) C++ API, developed by the Shanghai Futures Exchange (SHFE). It uses SWIG to generate Python wrappers around the native C++ CTP libraries, enabling Python developers to build automated trading systems for Chinese futures markets.</p>
-<p>The library supports <strong>Linux</strong>, <strong>macOS</strong>, and <strong>Windows</strong> platforms, with pre-built wheels available for Python 3.7–3.13 via PyPI.</p>
-<h2 id="key-features">Key Features<a class="headerlink" href="#key-features" title="Permanent link">&para;</a></h2>
+<h1 id="_1">项目概览<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<p><strong>更新日期:</strong> 2026-02-25<br />
+<strong>项目类型:</strong> Python C 扩展库<br />
+<strong>仓库类型:</strong> 单体仓库</p>
+<h2 id="_2">概述<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>ctp-python 是上海期货交易所（SHFE）官方 CTP（综合交易平台）C++ API 的 Python 绑定。使用 SWIG 自动生成 C++ 原生库的 Python 封装，使 Python 开发者能够构建中国期货市场的自动化交易系统。</p>
+<p>支持 <strong>Linux</strong>、<strong>macOS</strong> 和 <strong>Windows</strong> 平台，通过 PyPI 提供 Python 3.7–3.13 的预编译安装包。</p>
+<h2 id="_3">核心特性<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Cross-platform</strong>: Linux amd64, macOS arm64/amd64, Windows amd64</li>
-<li><strong>SWIG-based binding</strong>: Automatic generation of Python wrappers from C++ headers</li>
-<li><strong>GBK→UTF-8 auto-conversion</strong>: CTP returns GBK-encoded strings; the library converts them to UTF-8 automatically</li>
-<li><strong>Multiple API versions</strong>: Ships with CTP API versions 6.3.13 through 6.7.7 (default: 6.7.7)</li>
-<li><strong>Director pattern</strong>: Supports Python callback classes via SWIG directors for <code>CThostFtdcMdSpi</code> and <code>CThostFtdcTraderSpi</code></li>
+<li><strong>跨平台</strong>：Linux amd64、macOS arm64/amd64、Windows amd64</li>
+<li><strong>SWIG 自动绑定</strong>：从 C++ 头文件自动生成 Python 封装代码</li>
+<li><strong>GBK→UTF-8 自动转换</strong>：CTP 返回的 GBK 编码字符串自动转为 UTF-8</li>
+<li><strong>多 API 版本</strong>：内置 CTP 6.3.13 至 6.7.7（默认 6.7.7）</li>
+<li><strong>Director 模式</strong>：通过 SWIG Director 支持 Python 继承回调类 <code>CThostFtdcMdSpi</code> 和 <code>CThostFtdcTraderSpi</code></li>
 </ul>
-<h2 id="technology-stack">Technology Stack<a class="headerlink" href="#technology-stack" title="Permanent link">&para;</a></h2>
+<h2 id="_4">技术栈<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
-<th>Category</th>
-<th>Technology</th>
-<th>Version</th>
-<th>Notes</th>
+<th>分类</th>
+<th>技术</th>
+<th>版本</th>
+<th>说明</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Language</td>
+<td>编程语言</td>
 <td>Python</td>
 <td>3.7–3.13</td>
-<td>CPython only</td>
+<td>仅支持 CPython</td>
 </tr>
 <tr>
-<td>Native API</td>
+<td>原生 API</td>
 <td>CTP C++ SDK</td>
-<td>6.7.7 (default)</td>
-<td>Multiple versions available</td>
+<td>6.7.7（默认）</td>
+<td>支持多版本</td>
 </tr>
 <tr>
-<td>Binding Tool</td>
+<td>绑定工具</td>
 <td>SWIG</td>
-<td>Latest</td>
-<td>Generates C++ wrapper code</td>
+<td>最新版</td>
+<td>生成 C++ 封装代码</td>
 </tr>
 <tr>
-<td>Build System</td>
+<td>构建系统</td>
 <td>setuptools</td>
 <td>-</td>
-<td><code>setup.py</code> with custom <code>BuildPy</code> command</td>
+<td><code>setup.py</code> 自定义 <code>BuildPy</code> 命令</td>
 </tr>
 <tr>
 <td>CI/CD</td>
 <td>GitHub Actions</td>
 <td>-</td>
-<td><code>cibuildwheel</code> for cross-platform builds</td>
+<td><code>cibuildwheel</code> 跨平台构建</td>
 </tr>
 <tr>
-<td>Testing</td>
+<td>测试框架</td>
 <td>pytest</td>
 <td>8.x</td>
-<td>Unit + integration tests</td>
+<td>单元测试 + 集成测试</td>
 </tr>
 <tr>
-<td>Encoding</td>
+<td>编码转换</td>
 <td>iconv</td>
 <td>-</td>
-<td>GBK to UTF-8 conversion</td>
+<td>GBK 转 UTF-8</td>
 </tr>
 </tbody>
 </table>
-<h2 id="architecture-pattern">Architecture Pattern<a class="headerlink" href="#architecture-pattern" title="Permanent link">&para;</a></h2>
-<p><strong>SWIG Director Pattern</strong> — The library wraps two primary C++ API classes:</p>
+<h2 id="_5">架构模式<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<p><strong>SWIG Director 模式</strong> — 封装两个核心 C++ API 类：</p>
 <ol>
-<li><strong><code>CThostFtdcMdApi</code></strong> — Market Data API (行情接口)</li>
-<li><strong><code>CThostFtdcTraderApi</code></strong> — Trading API (交易接口)</li>
+<li><strong><code>CThostFtdcMdApi</code></strong> — 行情接口（Market Data API）</li>
+<li><strong><code>CThostFtdcTraderApi</code></strong> — 交易接口（Trading API）</li>
 </ol>
-<p>Each API has a corresponding SPI (Service Provider Interface) callback class:</p>
+<p>每个 API 都有对应的 SPI（服务提供者接口）回调类：</p>
 <ol>
-<li><strong><code>CThostFtdcMdSpi</code></strong> — Market Data callbacks</li>
-<li><strong><code>CThostFtdcTraderSpi</code></strong> — Trading callbacks</li>
+<li><strong><code>CThostFtdcMdSpi</code></strong> — 行情回调</li>
+<li><strong><code>CThostFtdcTraderSpi</code></strong> — 交易回调</li>
 </ol>
-<p>Users subclass the SPI classes in Python and override callback methods (e.g., <code>OnRspUserLogin</code>, <code>OnRtnDepthMarketData</code>) to handle events.</p>
-<h2 id="target-users">Target Users<a class="headerlink" href="#target-users" title="Permanent link">&para;</a></h2>
+<p>用户在 Python 中继承 SPI 类并重写回调方法（如 <code>OnRspUserLogin</code>、<code>OnRtnDepthMarketData</code>）来处理事件。</p>
+<h2 id="_6">目标用户<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Quantitative traders building automated futures trading systems</li>
-<li>Financial technology developers integrating with Chinese futures exchanges</li>
-<li>Algorithmic trading researchers using SimNow paper trading</li>
+<li>构建期货自动化交易系统的量化交易者</li>
+<li>对接中国期货交易所的金融科技开发者</li>
+<li>使用 SimNow 模拟盘的算法交易研究者</li>
 </ul>
 
 
