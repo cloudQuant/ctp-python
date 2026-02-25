@@ -32,7 +32,7 @@ if sys.platform.startswith("darwin"):
             os.path.join(API_DIR, "thosttraderapi_se.framework/Versions/A/Headers"),
         ]
         LIB_DIRS = [API_DIR]
-        LIB_NAMES = []
+        LIB_NAMES = ["iconv"]
         # Get direct paths to the framework libraries
         MD_LIB = os.path.join(
             API_DIR, "thostmduserapi_se.framework/Versions/A/thostmduserapi_se"

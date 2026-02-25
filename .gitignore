@@ -9,3 +9,5 @@ artifact/
 .DS_Store
 *.bak
 *.orig
+.env
+site/

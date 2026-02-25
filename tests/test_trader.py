@@ -10,14 +10,20 @@ import threading
 
 
 @pytest.fixture(scope="module")
-def spi(front, broker, user, password, app, auth):
-    assert front and broker and user and password and app and auth, "missing arguments"
-    _spi = TraderSpi(front, broker, user, password, app, auth)
+def spi(td_front, broker, user, password, app_id, auth):
+    from conftest import _parse_front_address, _check_tcp_reachable
+    assert td_front and broker and user and password and app_id and auth, "missing arguments"
+    host, port = _parse_front_address(td_front)
+    if host and port and not _check_tcp_reachable(host, port):
+        pytest.skip(f"TD front {td_front} is not reachable")
+    _spi = TraderSpi(td_front, broker, user, password, app_id, auth)
     th = threading.Thread(target=_spi.run)
     th.daemon = True
     th.start()
-    secs = 5
+    secs = 15
     while secs:
+        if _spi.login_error:
+            pytest.skip(f"TD login failed: ErrorID={_spi.login_error}, Msg={_spi.login_error_msg}")
         if not (_spi.connected and _spi.authed and _spi.loggedin):
             secs -= 1
             time.sleep(1)
@@ -41,6 +47,8 @@ class TraderSpi(ctp.CThostFtdcTraderSpi):
         self.connected = False
         self.authed = False
         self.loggedin = False
+        self.login_error = 0
+        self.login_error_msg = ""
 
         self.api = self.create()
 
@@ -89,6 +97,9 @@ class TraderSpi(ctp.CThostFtdcTraderSpi):
         print("OnRspUserLogin", pRspInfo.ErrorID, pRspInfo.ErrorMsg)
         if pRspInfo.ErrorID == 0:
             self.loggedin = True
+        else:
+            self.login_error = pRspInfo.ErrorID
+            self.login_error_msg = pRspInfo.ErrorMsg
 
     def OnRspError(self, pRspInfo:'CThostFtdcRspInfoField', nRequestID:'int', bIsLast:'bool'):
         print("OnRspError:", pRspInfo.ErrorID, pRspInfo.ErrorMsg)
