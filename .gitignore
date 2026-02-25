@@ -11,3 +11,5 @@ artifact/
 *.orig
 .env
 site/
+_bmad/
+.windsurf/

@@ -38,10 +38,12 @@
 
 ---
 
-## 原有文档
+## GitHub 仓库
 
-- [README](https://github.com/keli/ctp-python/blob/master/README.md) — 项目说明文档（安装与使用指南）
-- [LICENSE](https://github.com/keli/ctp-python/blob/master/LICENSE) — BSD License
+- :fontawesome-brands-github: **[cloudQuant/ctp-python](https://github.com/cloudQuant/ctp-python)** — Fork 仓库（含文档与测试改进）
+- :fontawesome-solid-code-branch: **[keli/ctp-python](https://github.com/keli/ctp-python)** — 原始仓库（上游）
+- [README](https://github.com/cloudQuant/ctp-python/blob/master/README.md) — 项目说明文档
+- [LICENSE](https://github.com/cloudQuant/ctp-python/blob/master/LICENSE) — BSD License
 
 ---
 

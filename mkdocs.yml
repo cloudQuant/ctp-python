@@ -1,8 +1,8 @@
 site_name: ctp-python 文档
 site_description: CTP Python 期货交易接口文档与教程
-site_url: ""
-repo_url: https://github.com/keli/ctp-python
-repo_name: keli/ctp-python
+site_url: https://cloudquant.github.io/ctp-python/
+repo_url: https://github.com/cloudQuant/ctp-python
+repo_name: cloudQuant/ctp-python
 
 docs_dir: docs
 
@@ -55,8 +55,25 @@ markdown_extensions:
   - pymdownx.details
   - attr_list
   - md_in_html
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - toc:
       permalink: true
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/cloudQuant/ctp-python
+      name: Fork (cloudQuant/ctp-python)
+    - icon: fontawesome/solid/code-branch
+      link: https://github.com/keli/ctp-python
+      name: 原始仓库 (keli/ctp-python)
+
+copyright: |
+  Fork: <a href="https://github.com/cloudQuant/ctp-python">cloudQuant/ctp-python</a> |
+  原始仓库: <a href="https://github.com/keli/ctp-python">keli/ctp-python</a> |
+  BSD License
 
 nav:
   - 首页: index.md

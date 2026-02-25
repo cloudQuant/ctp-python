@@ -1,161 +1,186 @@
 # Python版CTP期货接口
 
-这套接口使用swig为官方C++版CTP接口提供Python版API，同时支持Linux/Mac/Windows。
+[English](README_EN.md) | 中文
+
+[![PyPI](https://img.shields.io/pypi/v/ctp-python)](https://pypi.org/project/ctp-python/)
+[![Python](https://img.shields.io/pypi/pyversions/ctp-python)](https://pypi.org/project/ctp-python/)
+[![License](https://img.shields.io/github/license/keli/ctp-python)](LICENSE)
+
+使用 SWIG 为官方 C++ 版 CTP 接口提供 Python API，同时支持 Linux / macOS / Windows。
+
+📖 **[在线文档与教程](https://cloudquant.github.io/ctp-python/)**
+
+## 特性
+
+- **跨平台**：Linux amd64、macOS arm64/amd64、Windows amd64
+- **多 Python 版本**：支持 Python 3.7 – 3.13 (CPython)
+- **多 API 版本**：内置 CTP 6.3.13 – 6.7.7，默认使用 6.7.7
+- **GBK→UTF-8 自动转换**：CTP 返回的 GBK 编码字符串自动转为 UTF-8
+- **SWIG Director 模式**：支持 Python 继承回调类（`CThostFtdcMdSpi` / `CThostFtdcTraderSpi`）
+- **极大值自动处理**：市场数据中无效价格（极大值）打印时自动显示为 `None`
 
 ## 注意事项
 
-- **本项目出于个人兴趣及分享目的，与上期所CTP官方无任何关系。本人不对使用这套库的任何后果负责。**
-- 本人生产环境使用Linux，其他平台仅编译测试通过
-- 已通过github workflow编译好发布至pypi
-- Linux已测试环境：Debian stable amd64
-- Mac已测试环境：Mac OS 15.x（M1 Mac Mini，API版本6.6.9以上，Intel Mac未测试）
-- Windows已测试环境：Windows 11 64位（API版本6.6.9以上）+ MiniConda3
-- api目录中结尾带`.c`的版本号为测评版
-- CTP返回的GBK编码字符串已经全部自动转换为UTF-8
-- 市场数据中的极大值代表无数据，为可读性起见打印整个结构体时会显示为None
+> **本项目出于个人兴趣及分享目的，与上期所 CTP 官方无任何关系。作者不对使用这套库的任何后果负责。**
+
+- api 目录中结尾带 `.c` 的版本号为测评版
+- 生产环境主要测试 Linux，其他平台已通过编译测试
 
 ## 快速安装
 
-* 如果在Windows下推荐使用miniconda3环境
-```
-winget install miniconda3
-```
-
-* Windows下使用ctp前还需要安装libiconv
-```
-conda install -c conda-forge libiconv
-```
-
-* 直接使用pip安装
-```
+```bash
 pip install ctp-python
 ```
 
-- 只支持6.6.9以上的CTP版本，如需使用评测版本请自行编译
-- 已编译的二进制版本支持Python3.7 - 3.13
-- 已编译的二进制版本支持平台：Windows amd64，Linux amd64，MacOS arm64 和 amd64
-- 其他版本请自行尝试编译（前提是有对应的CTP C++链接库），具体方法见下
-
-## 测试
-
-> 打开python shell，检查是否能正常import ctp
-
+Windows 用户额外需要：
+```bash
+# 推荐使用 miniconda3
+winget install miniconda3
+conda install -c conda-forge libiconv
 ```
-$ python
-Python 3.11.3
-Type "help", "copyright", "credits" or "license" for more information.
+
+验证安装：
+```python
 >>> import ctp
->>>
+>>> print(ctp.CThostFtdcMdApi.GetApiVersion())
 ```
 
-> 跑一下测试（以simnow服务器为例，需要在simnow网站注册用户）
-```
-pytest -s tests/test_trader.py --front=tcp://180.168.146.187:10130 --broker=9999 --user=<investor_id> --password=<password> --app=simnow_client_test --auth=0000000000000000
+## 快速开始
+
+### 1. 配置 SimNow 模拟环境
+
+在 [simnow.com.cn](https://www.simnow.com.cn) 注册账号后，使用以下连接信息：
+
+| 环境 | 交易前置 | 行情前置 | 说明 |
+|------|----------|----------|------|
+| 第一套 | `tcp://182.254.243.31:30001` | `tcp://182.254.243.31:30011` | 交易时段可用 |
+| 第二套 | `tcp://182.254.243.31:40001` | `tcp://182.254.243.31:40011` | 7×24 测试 |
+
+- **BrokerID**: `9999`
+- **AppID**: `simnow_client_test`
+- **AuthCode**: `0000000000000000`
+
+### 2. 接收行情示例
+
+```python
+import ctp
+import os, tempfile
+
+class MyMdSpi(ctp.CThostFtdcMdSpi):
+    def OnFrontConnected(self):
+        field = ctp.CThostFtdcReqUserLoginField()
+        field.BrokerID = "9999"
+        field.UserID = "你的投资者代码"
+        field.Password = "你的密码"
+        self.api.ReqUserLogin(field, 1)
+
+    def OnRspUserLogin(self, pRspUserLogin, pRspInfo, nRequestID, bIsLast):
+        if pRspInfo.ErrorID == 0:
+            self.api.SubscribeMarketData(["IF2603"])
+
+    def OnRtnDepthMarketData(self, pData):
+        print(f"{pData.InstrumentID} 最新价:{pData.LastPrice} 量:{pData.Volume}")
+
+flow_dir = os.path.join(tempfile.gettempdir(), "ctp_md") + os.sep
+os.makedirs(flow_dir, exist_ok=True)
+spi = MyMdSpi()
+api = ctp.CThostFtdcMdApi.CreateFtdcMdApi(flow_dir)
+spi.api = api
+api.RegisterSpi(spi)
+api.RegisterFront("tcp://182.254.243.31:30011")
+api.Init()
+api.Join()
 ```
 
-## 自行编译 （可选）
+更多示例见 [examples/](examples/) 目录和[在线教程](https://cloudquant.github.io/ctp-python/tutorial/)。
+
+### 合约代码格式
+
+| 交易所 | 格式 | 示例 |
+|--------|------|------|
+| CFFEX（中金所） | 品种+4位年月 | `IF2603` |
+| SHFE（上期所） | 品种+4位年月 | `rb2605` |
+| DCE（大商所） | 品种+4位年月 | `m2609` |
+| **CZCE（郑商所）** | **品种+3位年月** | **`SA605`**（不是 SA2605） |
+| INE（能源中心） | 品种+4位年月 | `sc2606` |
+
+## 运行测试
+
+```bash
+# 配置环境变量
+cp .env.example .env
+# 编辑 .env 填入你的 SimNow 账号信息
+
+# 运行所有测试
+pytest tests/
+```
+
+## 自行编译（可选）
 
 ### 编译环境准备
 
-#### Windows 11
+**macOS：**
+```bash
+xcode-select --install
+brew install swig
+```
 
-1. 安装编译环境
-   ```
-   winget install Microsoft.VisualStudio.2022.BuildTools
-   ```
-   > 然后菜单栏搜索并打开Visual Studio Installer，修改Build Tools的配置，将使用C++的桌面开发勾选上并安装
+**Linux（Debian/Ubuntu）：**
+```bash
+sudo apt install swig g++
+```
 
-2. 安装Python（以miniconda为例）
-   ```
-   winget install miniconda3
-   conda init
-   ```
+**Windows 11：**
+```bash
+winget install Microsoft.VisualStudio.2022.BuildTools
+# 打开 Visual Studio Installer，勾选"使用C++的桌面开发"
+winget install miniconda3
+conda install -c conda-forge swig libiconv
+```
 
-3. 安装swig命令，以及iconv库
-   ```
-   conda install -c conda-forge swig libiconv
-   ```
-   > 可能需要关闭并重新打开命令行
+### 编译安装
 
-#### Mac OS
+```bash
+git clone https://github.com/cloudQuant/ctp-python.git
+cd ctp-python
+pip install .
+```
 
-1. 安装Xcode和命令行工具
-   ```
-   xcode-select --install
-   ```
-   > 在弹出的窗口确认
+### 版本选择
 
-2. 安装Python（推荐使用pyenv）
+默认使用 6.7.7 版本。切换其他版本：
 
-3. 安装swig命令（以homebrew为例）
-   ```
-   brew install swig
-   ```
+```bash
+# Linux/macOS
+export API_VER=6.6.9.c
 
-#### Linux
+# Windows
+set API_VER=6.6.9.c
 
-- 使用系统自带包管理器安装swig和gcc/g++编译器
-- 推荐使用pyenv安装管理python版本
+pip install .
+```
 
-### 编译方法
+## Linux 穿透式监管信息采集 FAQ
 
-1. 克隆代码到本地
-   ```
-   git clone git@github.com:keli/ctp-python.git
-   cd ctp-python
-   ```
+<details>
+<summary>点击展开</summary>
 
-2. 编译安装
-   ```
-   python setup.py install
-   ```
-   或
-   ```
-   pip install .
-   ```
+- **需不需要 LinuxDataCollect.so？**
+  自写 CTP 程序直连不需要。如果你不确定，那就是不需要。
 
-3. 版本选择（可选）
+- **Decrypt handshake data failed**
+  CTP 版本与服务器端不一致。首次采集可能需要"评测版本"如 `6.6.9.c`，生产环境用"生产版本"如 `6.6.9`。
 
-   目前默认使用的是6.7.7 版本。如果需要链接和使用其他版本，只需要在编译安装前，设置API_VER环境变量为相应版本即可。
+- **dmidecode not found**
+  加路径到 PATH：一般在 `/usr/sbin`。
 
-   以6.6.9.c版为例:
+- **permission denied**
+  `sudo chmod a+s /usr/sbin/dmidecode`
 
-   Linux/Mac(bash/zsh)：
-   ```
-   export API_VER=6.6.9.c
-   ```
+- **拿不到硬盘序列号**
+  Debian 系：`sudo adduser username disk`（需重新登录），或 `sudo chmod a+r /dev/sda`。
 
-   Windows：
-   ```
-   set API_VER=6.6.9.c
-   ```
-
-## Linux下穿透式监管信息采集常见问题
-
-- 到底需要不需要LinuxDataCollect.so?
-
-  自写CTP程序直连是不需要的，如果你不确定，那就是不需要
-
-- 报错Decrypt handshake data failed
-
-  CTP版本与服务器端不一致，首次跟期货公司采集的时候可能需要使用"评测版本"如6.6.9.c，后续生产环境请用"生产版本"如6.6.9
-
-- 报错 dmidecode not found
-
-  通常默认都有装，加一下dmidecode命令的相关路径到PATH，一般是/usr/sbin
-
-- 报一堆 permission denied
-
-  给dmidecode加下权限`sudo chmod a+s /usr/sbin/dmidecode`
-
-- 拿不到硬盘序列号
-
-  Debian系可以`sudo adduser username disk`把自己加到disk组（加完需要重新登录，输入`groups`确认自己已经在disk组里），或者直接给磁盘设备文件加读权限`sudo chmod a+r /dev/sda`
-
-- 不知道什么情况，xx数据拿不到
-
-  用以下python脚本自己慢慢试吧，当打印出来是第一行结果是0则成功了，否则是-1。第二行是取到的信息，格式为```(操作系统类型)@(信息采集时间)@(内网IP1)@(内网IP2)@(网卡MAC1)@(网卡MAC2)@(设备名)@(操作系统版本)@(Disk_ID)@(CPU_ID)@(BIOS_ID)```
-
+- **自行排查脚本**
   ```python
   import ctypes
   dll = ctypes.cdll.LoadLibrary('./thosttraderapi_se.so')
@@ -164,9 +189,44 @@ pytest -s tests/test_trader.py --front=tcp://180.168.146.187:10130 --broker=9999
   print(dll._Z21CTP_GetRealSystemInfoPcRi(info, ctypes.byref(length)))
   print(info.value)
   ```
+  返回格式：`(操作系统类型)@(采集时间)@(内网IP)@(MAC)@(设备名)@(OS版本)@(Disk_ID)@(CPU_ID)@(BIOS_ID)`
+
+</details>
 
 ## 其他常见问题
 
-- 回调函数中传入的数据结构为何不能缓存？
+<details>
+<summary>回调函数中传入的数据结构为何不能缓存？</summary>
 
-  回调函数传入的数据结构是由ctp库负责内存管理的，调用结束后会释放掉。这个最理想的处理是通过脚本把相应的结构体全部批量生成swig定义来自动把结构体内容复制到python，但目前还没有做这件事。我自己的用户代码中需要缓存起来的ctp结构只有很少的几处，直接在用户代码中手动拷贝到自己定义的python数据类型就可以了。
+回调函数传入的数据结构由 CTP 库负责内存管理，回调返回后会被释放。需要在回调内部将所需字段复制到 Python 变量中保存。
+
+</details>
+
+<details>
+<summary>订阅行情成功但收不到数据？</summary>
+
+- 检查合约代码格式：**CZCE 用 3 位**（如 `SA605`），不是 `SA2605`
+- 确认合约在交易时段内有成交
+- 确认合约未到期
+
+</details>
+
+<details>
+<summary>登录返回"不合法的登录"（ErrorID=3）？</summary>
+
+- 检查密码是否正确
+- 第一套环境仅交易时段可用
+- 新注册 SimNow 用户需等第三个交易日才能使用第二套环境
+
+</details>
+
+## 相关链接
+
+- 📖 [在线文档](https://cloudquant.github.io/ctp-python/) — API 参考、使用教程
+- 🔗 [原始仓库](https://github.com/keli/ctp-python) — 上游项目
+- 📦 [PyPI](https://pypi.org/project/ctp-python/) — pip 安装
+- 🌐 [SimNow](https://www.simnow.com.cn) — CTP 模拟环境
+
+## License
+
+[BSD License](LICENSE)

@@ -1,131 +1,131 @@
-# Development Guide: ctp-python
+# 开发指南
 
-**Generated:** 2026-02-25
+**更新日期:** 2026-02-25
 
-## Prerequisites
+## 环境要求
 
-| Requirement | Details |
-|-------------|---------|
-| Python | 3.7–3.13 (CPython) |
-| SWIG | Latest (only for building from source) |
-| C++ Compiler | GCC/G++ (Linux), Xcode CLI tools (macOS), MSVC Build Tools (Windows) |
-| libiconv | Windows only (via conda) |
+| 依赖 | 说明 |
+|------|------|
+| Python | 3.7–3.13（仅 CPython） |
+| SWIG | 最新版（仅从源码构建时需要） |
+| C++ 编译器 | GCC/G++（Linux）、Xcode 命令行工具（macOS）、MSVC Build Tools（Windows） |
+| libiconv | 仅 Windows 需要（通过 conda 安装） |
 
-### Platform-Specific Setup
+### 各平台环境配置
 
-**macOS:**
+**macOS：**
 ```bash
 xcode-select --install
 brew install swig
 ```
 
-**Linux (Debian/Ubuntu):**
+**Linux（Debian/Ubuntu）：**
 ```bash
 sudo apt install swig g++
 ```
 
-**Windows:**
+**Windows：**
 ```powershell
 winget install Microsoft.VisualStudio.2022.BuildTools
 winget install miniconda3
 conda install -c conda-forge swig libiconv
 ```
 
-## Quick Install (from PyPI)
+## 快速安装（从 PyPI）
 
 ```bash
 pip install ctp-python
 ```
 
-Pre-built wheels support Python 3.7–3.13 on Linux amd64, macOS arm64/amd64, Windows amd64.
+预编译安装包支持 Python 3.7–3.13，平台：Linux amd64、macOS arm64/amd64、Windows amd64。
 
-## Build from Source
+## 从源码构建
 
 ```bash
-git clone git@github.com:keli/ctp-python.git
+git clone https://github.com/cloudQuant/ctp-python.git
 cd ctp-python
 
-# Default API version 6.7.7
+# 默认 API 版本 6.7.7
 pip install .
 
-# Or specify a different API version
+# 指定其他 API 版本
 export API_VER=6.6.9
 pip install .
 ```
 
-## Environment Configuration
+## 环境变量配置
 
-Copy `.env.example` to `.env` and fill in your SimNow credentials:
+复制 `.env.example` 为 `.env` 并填入 SimNow 账号信息：
 
 ```bash
 cp .env.example .env
 ```
 
-### Required Environment Variables
+### 环境变量说明
 
-| Variable | Description | Example |
-|----------|-------------|---------|
-| `CTP_MD_FRONT` | Market data front address | `tcp://180.168.146.187:10131` |
-| `CTP_TD_FRONT` | Trading front address | `tcp://180.168.146.187:10130` |
-| `CTP_BROKER_ID` | Broker ID | `9999` |
-| `CTP_USER_ID` | SimNow investor ID | `your_user_id` |
-| `CTP_PASSWORD` | Password | `your_password` |
-| `CTP_APP_ID` | Client app ID | `simnow_client_test` |
-| `CTP_AUTH_CODE` | Auth code | `0000000000000000` |
-| `CTP_INSTRUMENT` | Test instrument | `IF2503` |
-| `CTP_EXCHANGE` | Exchange code | `CFFEX` |
+| 变量 | 说明 | 示例 |
+|------|------|------|
+| `CTP_MD_FRONT` | 行情前置地址 | `tcp://182.254.243.31:30011` |
+| `CTP_TD_FRONT` | 交易前置地址 | `tcp://182.254.243.31:30001` |
+| `CTP_BROKER_ID` | 经纪商代码 | `9999` |
+| `CTP_USER_ID` | SimNow 投资者代码 | `你的用户ID` |
+| `CTP_PASSWORD` | 密码 | `你的密码` |
+| `CTP_APP_ID` | 客户端 AppID | `simnow_client_test` |
+| `CTP_AUTH_CODE` | 认证码 | `0000000000000000` |
+| `CTP_INSTRUMENT` | 测试合约 | `IF2603` |
+| `CTP_EXCHANGE` | 交易所代码 | `CFFEX` |
 
-### SimNow Server Addresses
+### SimNow 服务器地址
 
-| Service | 7×24 Test | Trading Hours |
-|---------|-----------|---------------|
-| Market Data | `tcp://180.168.146.187:10131` | `tcp://180.168.146.187:10211` |
-| Trading | `tcp://180.168.146.187:10130` | `tcp://180.168.146.187:10201` |
+| 服务 | 第一套（交易时段） | 第二套（7×24 测试） |
+|------|-------------------|-------------------|
+| 行情前置 | `tcp://182.254.243.31:30011` | `tcp://182.254.243.31:40011` |
+| 交易前置 | `tcp://182.254.243.31:30001` | `tcp://182.254.243.31:40001` |
 
-Register at [https://www.simnow.com.cn](https://www.simnow.com.cn) to get SimNow credentials.
+在 [https://www.simnow.com.cn](https://www.simnow.com.cn) 注册获取 SimNow 账号。
 
-## Running Tests
+## 运行测试
 
-### All Tests
+### 全部测试
 ```bash
 python -m pytest tests/ -s -v
 ```
 
-### Unit Tests Only (no network required)
+### 仅单元测试（无需网络）
 ```bash
 python -m pytest tests/test_basic.py -v
 ```
 
-### Integration Tests (requires SimNow connectivity)
+### 集成测试（需要连接 SimNow）
 
-Market data tests:
+行情测试：
 ```bash
 python -m pytest tests/test_md.py -s -v
 ```
 
-Trading tests:
+交易测试：
 ```bash
 python -m pytest tests/test_trader.py -s -v
 ```
 
-Override via command line:
+命令行参数覆盖：
 ```bash
 python -m pytest tests/test_trader.py -s \
-  --front=tcp://180.168.146.187:10130 \
+  --front=tcp://182.254.243.31:30001 \
   --broker=9999 \
-  --user=<investor_id> \
-  --password=<password> \
+  --user=<投资者代码> \
+  --password=<密码> \
   --app=simnow_client_test \
   --auth=0000000000000000
 ```
 
-### Test Behavior
+### 测试行为说明
 
-- **Unit tests** (`test_basic.py`): Always run, verify module import and API object creation
-- **Integration tests** (`test_md.py`, `test_trader.py`): Auto-skip when SimNow servers are unreachable
-- Configuration loaded from `.env` via `python-dotenv`, command-line options override env vars
+- **单元测试** (`test_basic.py`)：始终运行，验证模块导入和 API 对象创建
+- **集成测试** (`test_md.py`、`test_trader.py`)：SimNow 不可达时自动跳过
+- 配置通过 `.env` 文件 + `python-dotenv` 加载，命令行参数优先级更高
 
-## Verify Installation
+## 验证安装
 
 ```python
 $ python
@@ -134,25 +134,26 @@ $ python
 'v6.7.7_xxx'
 ```
 
-## Common Issues
+## 常见问题
 
-### Import Error: `No module named 'ctp._ctp'`
+### 导入错误：`No module named 'ctp._ctp'`
 
-The C extension is not built. Either:
-- Install from PyPI: `pip install ctp-python`
-- Or build from source: `pip install .` (requires SWIG + compiler)
+C 扩展未编译。解决方法：
+
+- 从 PyPI 安装：`pip install ctp-python`
+- 或从源码构建：`pip install .`（需要 SWIG + 编译器）
 
 ### `Decrypt handshake data failed`
 
-CTP version mismatch with server. Use the evaluation version (e.g., `6.6.9.c`) for initial broker compliance testing, then switch to production version.
+CTP 版本与服务器不匹配。首次与期货公司进行穿透式采集时使用测评版本（如 `6.6.9.c`），之后切换为生产版本。
 
-### Linux: `dmidecode not found` or `permission denied`
+### Linux：`dmidecode not found` 或 `permission denied`
 
 ```bash
-# Add dmidecode to PATH
+# 添加 dmidecode 到 PATH
 export PATH=$PATH:/usr/sbin
 
-# Fix permissions
+# 修复权限
 sudo chmod a+s /usr/sbin/dmidecode
 sudo adduser $USER disk
 ```
