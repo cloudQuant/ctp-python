@@ -1,0 +1,3103 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="CTP Python 期货交易接口文档与教程">
+      
+      
+      
+      
+        <link rel="prev" href="../api-reference-md/">
+      
+      
+        <link rel="next" href="../project-overview/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.2">
+    
+    
+      
+        <title>交易接口 - ctp-python 文档</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#api-trader" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="ctp-python 文档" class="md-header__button md-logo" aria-label="ctp-python 文档" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ctp-python 文档
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              交易接口
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换至深色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换至深色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换至浅色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换至浅色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/keli/ctp-python" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    keli/ctp-python
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  首页
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../tutorial/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  使用教程
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../api-reference-md/" class="md-tabs__link">
+          
+  
+  
+  API 参考
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../project-overview/" class="md-tabs__link">
+          
+  
+  
+  项目文档
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="ctp-python 文档" class="md-nav__button md-logo" aria-label="ctp-python 文档" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    ctp-python 文档
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/keli/ctp-python" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    keli/ctp-python
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorial/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    使用教程
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API 参考
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API 参考
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api-reference-md/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    行情接口
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    交易接口
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    交易接口
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#cthostftdctraderapi-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CThostFtdcTraderApi — 交易 API
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CThostFtdcTraderApi — 交易 API">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        生命周期方法
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        注册方法
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        认证与登录
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        报单操作（核心）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        报价与期权操作
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        查询方法（常用）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        查询方法（其他）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        银期转账
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cthostftdctraderspi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CThostFtdcTraderSpi — 交易回调
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CThostFtdcTraderSpi — 交易回调">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        连接回调
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        认证与登录回调
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        报单回调（核心）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        查询回调（常用）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        主动推送回调
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        银期转账回调
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        核心数据结构
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="核心数据结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cthostftdcreqauthenticatefield" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CThostFtdcReqAuthenticateField — 认证请求
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cthostftdcinputorderfield" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CThostFtdcInputOrderField — 报单请求
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cthostftdcorderfield" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CThostFtdcOrderField — 报单回报
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cthostftdctradefield" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CThostFtdcTradeField — 成交回报
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cthostftdcinputorderactionfield" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CThostFtdcInputOrderActionField — 撤单请求
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cthostftdcinvestorpositionfield" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CThostFtdcInvestorPositionField — 持仓
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cthostftdctradingaccountfield" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CThostFtdcTradingAccountField — 资金账户
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cthostftdcinstrumentfield" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CThostFtdcInstrumentField — 合约信息
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cthostftdcsettlementinfoconfirmfield" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CThostFtdcSettlementInfoConfirmField — 结算确认请求
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        查询请求字段
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="查询请求字段">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cthostftdcqryinstrumentfield" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CThostFtdcQryInstrumentField
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cthostftdcqrytradingaccountfield" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CThostFtdcQryTradingAccountField
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cthostftdcqryinvestorpositionfield" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CThostFtdcQryInvestorPositionField
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    项目文档
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    项目文档
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../project-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    项目概览
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    架构设计
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../source-tree-analysis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    源码结构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../development-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    开发指南
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#cthostftdctraderapi-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CThostFtdcTraderApi — 交易 API
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CThostFtdcTraderApi — 交易 API">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        生命周期方法
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        注册方法
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        认证与登录
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        报单操作（核心）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        报价与期权操作
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        查询方法（常用）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        查询方法（其他）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        银期转账
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cthostftdctraderspi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CThostFtdcTraderSpi — 交易回调
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CThostFtdcTraderSpi — 交易回调">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        连接回调
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        认证与登录回调
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        报单回调（核心）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        查询回调（常用）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        主动推送回调
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        银期转账回调
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        核心数据结构
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="核心数据结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cthostftdcreqauthenticatefield" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CThostFtdcReqAuthenticateField — 认证请求
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cthostftdcinputorderfield" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CThostFtdcInputOrderField — 报单请求
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cthostftdcorderfield" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CThostFtdcOrderField — 报单回报
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cthostftdctradefield" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CThostFtdcTradeField — 成交回报
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cthostftdcinputorderactionfield" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CThostFtdcInputOrderActionField — 撤单请求
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cthostftdcinvestorpositionfield" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CThostFtdcInvestorPositionField — 持仓
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cthostftdctradingaccountfield" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CThostFtdcTradingAccountField — 资金账户
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cthostftdcinstrumentfield" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CThostFtdcInstrumentField — 合约信息
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cthostftdcsettlementinfoconfirmfield" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CThostFtdcSettlementInfoConfirmField — 结算确认请求
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        查询请求字段
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="查询请求字段">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cthostftdcqryinstrumentfield" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CThostFtdcQryInstrumentField
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cthostftdcqrytradingaccountfield" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CThostFtdcQryTradingAccountField
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cthostftdcqryinvestorpositionfield" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CThostFtdcQryInvestorPositionField
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="api-trader">API 参考：交易接口 (Trader)<a class="headerlink" href="#api-trader" title="Permanent link">&para;</a></h1>
+<h2 id="cthostftdctraderapi-api">CThostFtdcTraderApi — 交易 API<a class="headerlink" href="#cthostftdctraderapi-api" title="Permanent link">&para;</a></h2>
+<p>交易 API 用于连接 CTP 交易前置，执行报单、撤单、查询持仓/资金等操作。</p>
+<h3 id="_1">生命周期方法<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>参数</th>
+<th>返回值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CreateFtdcTraderApi(flowPath)</code></td>
+<td><code>flowPath</code>: str — 流文件存储路径（须以 <code>/</code> 或 <code>\\</code> 结尾）</td>
+<td><code>CThostFtdcTraderApi</code></td>
+<td><strong>静态工厂方法</strong>，创建 TraderApi 实例</td>
+</tr>
+<tr>
+<td><code>GetApiVersion()</code></td>
+<td>无</td>
+<td>str</td>
+<td><strong>静态方法</strong>，返回 API 版本号</td>
+</tr>
+<tr>
+<td><code>Init()</code></td>
+<td>无</td>
+<td>None</td>
+<td>初始化并启动连接（异步，立即返回）</td>
+</tr>
+<tr>
+<td><code>Join()</code></td>
+<td>无</td>
+<td>int</td>
+<td>阻塞等待 API 线程退出</td>
+</tr>
+<tr>
+<td><code>Release()</code></td>
+<td>无</td>
+<td>None</td>
+<td>释放 API 资源</td>
+</tr>
+<tr>
+<td><code>GetTradingDay()</code></td>
+<td>无</td>
+<td>str</td>
+<td>获取当前交易日 <code>"YYYYMMDD"</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="_2">注册方法<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>RegisterSpi(pSpi)</code></td>
+<td><code>pSpi</code>: <code>CThostFtdcTraderSpi</code> 子类实例或 <code>None</code></td>
+<td>注册回调处理器</td>
+</tr>
+<tr>
+<td><code>RegisterFront(pszFrontAddress)</code></td>
+<td><code>pszFrontAddress</code>: str — 如 <code>"tcp://182.254.243.31:30001"</code></td>
+<td>注册交易前置地址</td>
+</tr>
+<tr>
+<td><code>RegisterNameServer(pszNsAddress)</code></td>
+<td><code>pszNsAddress</code>: str</td>
+<td>注册名字服务器地址</td>
+</tr>
+<tr>
+<td><code>RegisterFensUserInfo(pFensUserInfo)</code></td>
+<td><code>pFensUserInfo</code>: <code>CThostFtdcFensUserInfoField</code></td>
+<td>注册 FENS 用户信息</td>
+</tr>
+<tr>
+<td><code>SubscribePrivateTopic(nResumeType)</code></td>
+<td><code>nResumeType</code>: int — 0=重传, 1=续传, 2=仅新</td>
+<td>订阅私有流。<strong>必须在 Init() 之前调用</strong></td>
+</tr>
+<tr>
+<td><code>SubscribePublicTopic(nResumeType)</code></td>
+<td><code>nResumeType</code>: int — 0=重传, 1=续传, 2=仅新</td>
+<td>订阅公共流。<strong>必须在 Init() 之前调用</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="_3">认证与登录<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>请求字段</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ReqAuthenticate(pReqAuthenticateField, nRequestID)</code></td>
+<td><code>CThostFtdcReqAuthenticateField</code></td>
+<td><strong>穿透式认证</strong>（6.3.15+ 必需）。回调: <code>OnRspAuthenticate</code></td>
+</tr>
+<tr>
+<td><code>ReqUserLogin(pReqUserLoginField, nRequestID)</code></td>
+<td><code>CThostFtdcReqUserLoginField</code></td>
+<td>登录请求。回调: <code>OnRspUserLogin</code></td>
+</tr>
+<tr>
+<td><code>ReqUserLogout(pUserLogout, nRequestID)</code></td>
+<td><code>CThostFtdcUserLogoutField</code></td>
+<td>登出请求</td>
+</tr>
+<tr>
+<td><code>ReqUserPasswordUpdate(pUserPasswordUpdate, nRequestID)</code></td>
+<td><code>CThostFtdcUserPasswordUpdateField</code></td>
+<td>修改密码</td>
+</tr>
+<tr>
+<td><code>ReqUserAuthMethod(pReqUserAuthMethod, nRequestID)</code></td>
+<td><code>CThostFtdcReqUserAuthMethodField</code></td>
+<td>查询用户认证方式</td>
+</tr>
+<tr>
+<td><code>SubmitUserSystemInfo(pUserSystemInfo)</code></td>
+<td><code>CThostFtdcUserSystemInfoField</code></td>
+<td>上报终端信息</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>所有 <code>Req*</code> 方法返回 int：<code>0</code>=成功发送, <code>-1</code>=网络失败, <code>-2</code>=请求过多, <code>-3</code>=每秒请求超限。</p>
+</blockquote>
+<h3 id="_4">报单操作（核心）<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>请求字段</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ReqOrderInsert(pInputOrder, nRequestID)</code></td>
+<td><code>CThostFtdcInputOrderField</code></td>
+<td><strong>报单录入</strong>。回调: <code>OnRspOrderInsert</code>(失败) / <code>OnRtnOrder</code>+<code>OnRtnTrade</code>(成功)</td>
+</tr>
+<tr>
+<td><code>ReqOrderAction(pInputOrderAction, nRequestID)</code></td>
+<td><code>CThostFtdcInputOrderActionField</code></td>
+<td><strong>撤单</strong>。回调: <code>OnRspOrderAction</code>(失败) / <code>OnRtnOrder</code>(成功)</td>
+</tr>
+<tr>
+<td><code>ReqParkedOrderInsert(pParkedOrder, nRequestID)</code></td>
+<td><code>CThostFtdcParkedOrderField</code></td>
+<td>预埋单录入</td>
+</tr>
+<tr>
+<td><code>ReqParkedOrderAction(pParkedOrderAction, nRequestID)</code></td>
+<td><code>CThostFtdcParkedOrderActionField</code></td>
+<td>预埋撤单</td>
+</tr>
+<tr>
+<td><code>ReqRemoveParkedOrder(pRemoveParkedOrder, nRequestID)</code></td>
+<td><code>CThostFtdcRemoveParkedOrderField</code></td>
+<td>删除预埋单</td>
+</tr>
+<tr>
+<td><code>ReqRemoveParkedOrderAction(pRemoveParkedOrderAction, nRequestID)</code></td>
+<td><code>CThostFtdcRemoveParkedOrderActionField</code></td>
+<td>删除预埋撤单</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_5">报价与期权操作<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>请求字段</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ReqQuoteInsert(pInputQuote, nRequestID)</code></td>
+<td><code>CThostFtdcInputQuoteField</code></td>
+<td>报价录入</td>
+</tr>
+<tr>
+<td><code>ReqQuoteAction(pInputQuoteAction, nRequestID)</code></td>
+<td><code>CThostFtdcInputQuoteActionField</code></td>
+<td>报价操作</td>
+</tr>
+<tr>
+<td><code>ReqExecOrderInsert(pInputExecOrder, nRequestID)</code></td>
+<td><code>CThostFtdcInputExecOrderField</code></td>
+<td>执行宣告录入（期权行权）</td>
+</tr>
+<tr>
+<td><code>ReqExecOrderAction(pInputExecOrderAction, nRequestID)</code></td>
+<td><code>CThostFtdcInputExecOrderActionField</code></td>
+<td>执行宣告操作</td>
+</tr>
+<tr>
+<td><code>ReqForQuoteInsert(pInputForQuote, nRequestID)</code></td>
+<td><code>CThostFtdcInputForQuoteField</code></td>
+<td>询价录入</td>
+</tr>
+<tr>
+<td><code>ReqBatchOrderAction(pInputBatchOrderAction, nRequestID)</code></td>
+<td><code>CThostFtdcInputBatchOrderActionField</code></td>
+<td>批量撤单</td>
+</tr>
+<tr>
+<td><code>ReqCombActionInsert(pInputCombAction, nRequestID)</code></td>
+<td><code>CThostFtdcInputCombActionField</code></td>
+<td>组合录入</td>
+</tr>
+<tr>
+<td><code>ReqOptionSelfCloseInsert(pInputOptionSelfClose, nRequestID)</code></td>
+<td><code>CThostFtdcInputOptionSelfCloseField</code></td>
+<td>期权自对冲录入</td>
+</tr>
+<tr>
+<td><code>ReqOptionSelfCloseAction(pInputOptionSelfCloseAction, nRequestID)</code></td>
+<td><code>CThostFtdcInputOptionSelfCloseActionField</code></td>
+<td>期权自对冲操作</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_6">查询方法（常用）<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>请求字段</th>
+<th>回调</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ReqQryInstrument(pQryInstrument, nRequestID)</code></td>
+<td><code>CThostFtdcQryInstrumentField</code></td>
+<td><code>OnRspQryInstrument</code></td>
+<td>查询合约</td>
+</tr>
+<tr>
+<td><code>ReqQryTradingAccount(pQryTradingAccount, nRequestID)</code></td>
+<td><code>CThostFtdcQryTradingAccountField</code></td>
+<td><code>OnRspQryTradingAccount</code></td>
+<td>查询资金账户</td>
+</tr>
+<tr>
+<td><code>ReqQryInvestorPosition(pQryInvestorPosition, nRequestID)</code></td>
+<td><code>CThostFtdcQryInvestorPositionField</code></td>
+<td><code>OnRspQryInvestorPosition</code></td>
+<td>查询持仓</td>
+</tr>
+<tr>
+<td><code>ReqQryInvestorPositionDetail(pQryInvestorPositionDetail, nRequestID)</code></td>
+<td>同上模式</td>
+<td><code>OnRspQryInvestorPositionDetail</code></td>
+<td>查询持仓明细</td>
+</tr>
+<tr>
+<td><code>ReqQryOrder(pQryOrder, nRequestID)</code></td>
+<td><code>CThostFtdcQryOrderField</code></td>
+<td><code>OnRspQryOrder</code></td>
+<td>查询报单</td>
+</tr>
+<tr>
+<td><code>ReqQryTrade(pQryTrade, nRequestID)</code></td>
+<td><code>CThostFtdcQryTradeField</code></td>
+<td><code>OnRspQryTrade</code></td>
+<td>查询成交</td>
+</tr>
+<tr>
+<td><code>ReqQryDepthMarketData(pQryDepthMarketData, nRequestID)</code></td>
+<td><code>CThostFtdcQryDepthMarketDataField</code></td>
+<td><code>OnRspQryDepthMarketData</code></td>
+<td>查询行情</td>
+</tr>
+<tr>
+<td><code>ReqQryInstrumentCommissionRate(pQryInstrumentCommissionRate, nRequestID)</code></td>
+<td>同上模式</td>
+<td><code>OnRspQryInstrumentCommissionRate</code></td>
+<td>查询手续费率</td>
+</tr>
+<tr>
+<td><code>ReqQryInstrumentMarginRate(pQryInstrumentMarginRate, nRequestID)</code></td>
+<td>同上模式</td>
+<td><code>OnRspQryInstrumentMarginRate</code></td>
+<td>查询保证金率</td>
+</tr>
+<tr>
+<td><code>ReqQryExchange(pQryExchange, nRequestID)</code></td>
+<td><code>CThostFtdcQryExchangeField</code></td>
+<td><code>OnRspQryExchange</code></td>
+<td>查询交易所</td>
+</tr>
+<tr>
+<td><code>ReqQryProduct(pQryProduct, nRequestID)</code></td>
+<td><code>CThostFtdcQryProductField</code></td>
+<td><code>OnRspQryProduct</code></td>
+<td>查询品种</td>
+</tr>
+<tr>
+<td><code>ReqSettlementInfoConfirm(pSettlementInfoConfirm, nRequestID)</code></td>
+<td><code>CThostFtdcSettlementInfoConfirmField</code></td>
+<td><code>OnRspSettlementInfoConfirm</code></td>
+<td><strong>结算单确认</strong>（每日首次登录后必须调用）</td>
+</tr>
+<tr>
+<td><code>ReqQrySettlementInfo(pQrySettlementInfo, nRequestID)</code></td>
+<td><code>CThostFtdcQrySettlementInfoField</code></td>
+<td><code>OnRspQrySettlementInfo</code></td>
+<td>查询结算单</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_7">查询方法（其他）<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ReqQryExchangeMarginRate(...)</code></td>
+<td>查询交易所保证金率</td>
+</tr>
+<tr>
+<td><code>ReqQryExchangeMarginRateAdjust(...)</code></td>
+<td>查询交易所保证金率调整</td>
+</tr>
+<tr>
+<td><code>ReqQryExchangeRate(...)</code></td>
+<td>查询汇率</td>
+</tr>
+<tr>
+<td><code>ReqQryInvestor(...)</code></td>
+<td>查询投资者</td>
+</tr>
+<tr>
+<td><code>ReqQryTradingCode(...)</code></td>
+<td>查询交易编码</td>
+</tr>
+<tr>
+<td><code>ReqQryBrokerTradingParams(...)</code></td>
+<td>查询经纪商交易参数</td>
+</tr>
+<tr>
+<td><code>ReqQryBrokerTradingAlgos(...)</code></td>
+<td>查询经纪商交易算法</td>
+</tr>
+<tr>
+<td><code>ReqQryTransferBank(...)</code></td>
+<td>查询转帐银行</td>
+</tr>
+<tr>
+<td><code>ReqQryTransferSerial(...)</code></td>
+<td>查询转帐流水</td>
+</tr>
+<tr>
+<td><code>ReqQryAccountregister(...)</code></td>
+<td>查询银期签约关系</td>
+</tr>
+<tr>
+<td><code>ReqQryContractBank(...)</code></td>
+<td>查询签约银行</td>
+</tr>
+<tr>
+<td><code>ReqQryParkedOrder(...)</code></td>
+<td>查询预埋单</td>
+</tr>
+<tr>
+<td><code>ReqQryParkedOrderAction(...)</code></td>
+<td>查询预埋撤单</td>
+</tr>
+<tr>
+<td><code>ReqQryTradingNotice(...)</code></td>
+<td>查询交易通知</td>
+</tr>
+<tr>
+<td><code>ReqQryNotice(...)</code></td>
+<td>查询通知</td>
+</tr>
+<tr>
+<td><code>ReqQryClassifiedInstrument(...)</code></td>
+<td>查询分类合约</td>
+</tr>
+<tr>
+<td><code>ReqQryMaxOrderVolume(...)</code></td>
+<td>查询最大报单数量</td>
+</tr>
+<tr>
+<td><code>ReqQryCombInstrumentGuard(...)</code></td>
+<td>查询组合合约安全系数</td>
+</tr>
+<tr>
+<td><code>ReqQryCombPromotionParam(...)</code></td>
+<td>查询组合优惠比例</td>
+</tr>
+<tr>
+<td><code>ReqQryOptionInstrTradeCost(...)</code></td>
+<td>查询期权交易成本</td>
+</tr>
+<tr>
+<td><code>ReqQryOptionInstrCommRate(...)</code></td>
+<td>查询期权手续费率</td>
+</tr>
+<tr>
+<td><code>ReqQryInvestorPortfSetting(...)</code></td>
+<td>查询投资者组合持仓设置</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_8">银期转账<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ReqFromBankToFutureByFuture(...)</code></td>
+<td>期货发起银行资金转期货（入金）</td>
+</tr>
+<tr>
+<td><code>ReqFromFutureToBankByFuture(...)</code></td>
+<td>期货发起期货资金转银行（出金）</td>
+</tr>
+<tr>
+<td><code>ReqQueryBankAccountMoneyByFuture(...)</code></td>
+<td>期货发起查询银行余额</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="cthostftdctraderspi">CThostFtdcTraderSpi — 交易回调<a class="headerlink" href="#cthostftdctraderspi" title="Permanent link">&para;</a></h2>
+<h3 id="_9">连接回调<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>参数</th>
+<th>触发时机</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>OnFrontConnected()</code></td>
+<td>无</td>
+<td>与交易前置建立连接后。此时应发起认证</td>
+</tr>
+<tr>
+<td><code>OnFrontDisconnected(nReason)</code></td>
+<td><code>nReason</code>: int</td>
+<td>连接断开时。API 会自动重连</td>
+</tr>
+<tr>
+<td><code>OnHeartBeatWarning(nTimeLapse)</code></td>
+<td><code>nTimeLapse</code>: int</td>
+<td>心跳超时警告</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_10">认证与登录回调<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>OnRspAuthenticate(pRspAuthenticateField, pRspInfo, nRequestID, bIsLast)</code></td>
+<td>认证结果</td>
+<td>认证应答。成功后应发起登录</td>
+</tr>
+<tr>
+<td><code>OnRspUserLogin(pRspUserLogin, pRspInfo, nRequestID, bIsLast)</code></td>
+<td>登录结果</td>
+<td>登录应答。成功后应确认结算单</td>
+</tr>
+<tr>
+<td><code>OnRspUserLogout(pUserLogout, pRspInfo, nRequestID, bIsLast)</code></td>
+<td>登出结果</td>
+<td>登出应答</td>
+</tr>
+<tr>
+<td><code>OnRspUserPasswordUpdate(...)</code></td>
+<td>修改密码结果</td>
+<td>密码修改应答</td>
+</tr>
+<tr>
+<td><code>OnRspSettlementInfoConfirm(pSettlementInfoConfirm, pRspInfo, nRequestID, bIsLast)</code></td>
+<td>确认结果</td>
+<td>结算单确认应答</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_11">报单回调（核心）<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>OnRspOrderInsert(pInputOrder, pRspInfo, nRequestID, bIsLast)</code></td>
+<td><code>pInputOrder</code>: <code>CThostFtdcInputOrderField</code></td>
+<td><strong>报单失败</strong>时回调（CTP 前置拒绝）</td>
+</tr>
+<tr>
+<td><code>OnRspOrderAction(pInputOrderAction, pRspInfo, nRequestID, bIsLast)</code></td>
+<td><code>pInputOrderAction</code>: <code>CThostFtdcInputOrderActionField</code></td>
+<td><strong>撤单失败</strong>时回调</td>
+</tr>
+<tr>
+<td><code>OnRtnOrder(pOrder)</code></td>
+<td><code>pOrder</code>: <code>CThostFtdcOrderField</code></td>
+<td><strong>报单回报</strong>（每次状态变化都会推送）</td>
+</tr>
+<tr>
+<td><code>OnRtnTrade(pTrade)</code></td>
+<td><code>pTrade</code>: <code>CThostFtdcTradeField</code></td>
+<td><strong>成交回报</strong>（每笔成交推送一次）</td>
+</tr>
+<tr>
+<td><code>OnErrRtnOrderInsert(pInputOrder, pRspInfo)</code></td>
+<td>报单 + 错误信息</td>
+<td>交易所报单失败回报</td>
+</tr>
+<tr>
+<td><code>OnErrRtnOrderAction(pOrderAction, pRspInfo)</code></td>
+<td>撤单 + 错误信息</td>
+<td>交易所撤单失败回报</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>报单流程</strong>：
+- 成功: <code>ReqOrderInsert</code> → <code>OnRtnOrder</code>(已提交) → <code>OnRtnOrder</code>(已排队) → <code>OnRtnTrade</code>(成交) → <code>OnRtnOrder</code>(全部成交)
+- CTP 拒绝: <code>ReqOrderInsert</code> → <code>OnRspOrderInsert</code>(ErrorID≠0)
+- 交易所拒绝: <code>ReqOrderInsert</code> → <code>OnRtnOrder</code> → <code>OnErrRtnOrderInsert</code></p>
+</blockquote>
+<h3 id="_12">查询回调（常用）<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>OnRspQryInstrument(pInstrument, pRspInfo, nRequestID, bIsLast)</code></td>
+<td><code>pInstrument</code>: <code>CThostFtdcInstrumentField</code></td>
+<td>合约查询应答。<code>bIsLast=True</code> 表示最后一条</td>
+</tr>
+<tr>
+<td><code>OnRspQryTradingAccount(pTradingAccount, pRspInfo, nRequestID, bIsLast)</code></td>
+<td><code>pTradingAccount</code>: <code>CThostFtdcTradingAccountField</code></td>
+<td>资金查询应答</td>
+</tr>
+<tr>
+<td><code>OnRspQryInvestorPosition(pInvestorPosition, pRspInfo, nRequestID, bIsLast)</code></td>
+<td><code>pInvestorPosition</code>: <code>CThostFtdcInvestorPositionField</code></td>
+<td>持仓查询应答</td>
+</tr>
+<tr>
+<td><code>OnRspQryOrder(pOrder, pRspInfo, nRequestID, bIsLast)</code></td>
+<td><code>pOrder</code>: <code>CThostFtdcOrderField</code></td>
+<td>报单查询应答</td>
+</tr>
+<tr>
+<td><code>OnRspQryTrade(pTrade, pRspInfo, nRequestID, bIsLast)</code></td>
+<td><code>pTrade</code>: <code>CThostFtdcTradeField</code></td>
+<td>成交查询应答</td>
+</tr>
+<tr>
+<td><code>OnRspQryDepthMarketData(pDepthMarketData, pRspInfo, nRequestID, bIsLast)</code></td>
+<td><code>pDepthMarketData</code>: <code>CThostFtdcDepthMarketDataField</code></td>
+<td>行情快照查询应答</td>
+</tr>
+<tr>
+<td><code>OnRspQrySettlementInfo(pSettlementInfo, pRspInfo, nRequestID, bIsLast)</code></td>
+<td><code>pSettlementInfo</code>: <code>CThostFtdcSettlementInfoField</code></td>
+<td>结算单查询应答</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>分页查询</strong>：当查询结果有多条记录时，回调会被多次调用，每次传一条记录。<code>bIsLast=True</code> 表示最后一条。</p>
+</blockquote>
+<h3 id="_13">主动推送回调<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>OnRtnInstrumentStatus(pInstrumentStatus)</code></td>
+<td><code>CThostFtdcInstrumentStatusField</code></td>
+<td>合约交易状态变化通知</td>
+</tr>
+<tr>
+<td><code>OnRtnTradingNotice(pTradingNoticeInfo)</code></td>
+<td><code>CThostFtdcTradingNoticeInfoField</code></td>
+<td>交易通知</td>
+</tr>
+<tr>
+<td><code>OnRtnBulletin(pBulletin)</code></td>
+<td><code>CThostFtdcBulletinField</code></td>
+<td>交易所公告</td>
+</tr>
+<tr>
+<td><code>OnRtnErrorConditionalOrder(pErrorConditionalOrder)</code></td>
+<td><code>CThostFtdcErrorConditionalOrderField</code></td>
+<td>条件单触发错误</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_14">银期转账回调<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>OnRtnFromBankToFutureByFuture(pRspTransfer)</code></td>
+<td>银行转期货通知</td>
+</tr>
+<tr>
+<td><code>OnRtnFromFutureToBankByFuture(pRspTransfer)</code></td>
+<td>期货转银行通知</td>
+</tr>
+<tr>
+<td><code>OnRtnFromBankToFutureByBank(pRspTransfer)</code></td>
+<td>银行发起银转期通知</td>
+</tr>
+<tr>
+<td><code>OnRtnFromFutureToBankByBank(pRspTransfer)</code></td>
+<td>银行发起期转银通知</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_15">核心数据结构<a class="headerlink" href="#_15" title="Permanent link">&para;</a></h2>
+<h3 id="cthostftdcreqauthenticatefield">CThostFtdcReqAuthenticateField — 认证请求<a class="headerlink" href="#cthostftdcreqauthenticatefield" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>必填</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>BrokerID</code></td>
+<td>str</td>
+<td>✅</td>
+<td>经纪商代码</td>
+</tr>
+<tr>
+<td><code>UserID</code></td>
+<td>str</td>
+<td>✅</td>
+<td>投资者代码</td>
+</tr>
+<tr>
+<td><code>AppID</code></td>
+<td>str</td>
+<td>✅</td>
+<td>客户端 AppID（SimNow: <code>"simnow_client_test"</code>）</td>
+</tr>
+<tr>
+<td><code>AuthCode</code></td>
+<td>str</td>
+<td>✅</td>
+<td>认证码（SimNow: <code>"0000000000000000"</code>）</td>
+</tr>
+<tr>
+<td><code>UserProductInfo</code></td>
+<td>str</td>
+<td></td>
+<td>用户产品信息</td>
+</tr>
+</tbody>
+</table>
+<h3 id="cthostftdcinputorderfield">CThostFtdcInputOrderField — 报单请求<a class="headerlink" href="#cthostftdcinputorderfield" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>必填</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>BrokerID</code></td>
+<td>str</td>
+<td>✅</td>
+<td>经纪商代码</td>
+</tr>
+<tr>
+<td><code>InvestorID</code></td>
+<td>str</td>
+<td>✅</td>
+<td>投资者代码</td>
+</tr>
+<tr>
+<td><code>InstrumentID</code></td>
+<td>str</td>
+<td>✅</td>
+<td>合约代码</td>
+</tr>
+<tr>
+<td><code>OrderRef</code></td>
+<td>str</td>
+<td>✅</td>
+<td>报单引用（用户自定义，同一会话内唯一）</td>
+</tr>
+<tr>
+<td><code>UserID</code></td>
+<td>str</td>
+<td>✅</td>
+<td>用户代码</td>
+</tr>
+<tr>
+<td><code>Direction</code></td>
+<td>str</td>
+<td>✅</td>
+<td>买卖方向：<code>'0'</code>=买, <code>'1'</code>=卖</td>
+</tr>
+<tr>
+<td><code>CombOffsetFlag</code></td>
+<td>str</td>
+<td>✅</td>
+<td>开平标志：<code>'0'</code>=开仓, <code>'1'</code>=平仓, <code>'3'</code>=平今, <code>'4'</code>=平昨</td>
+</tr>
+<tr>
+<td><code>CombHedgeFlag</code></td>
+<td>str</td>
+<td>✅</td>
+<td>投机套保标志：<code>'1'</code>=投机, <code>'2'</code>=套利, <code>'3'</code>=套保</td>
+</tr>
+<tr>
+<td><code>OrderPriceType</code></td>
+<td>str</td>
+<td>✅</td>
+<td>报单价格条件：<code>'1'</code>=任意价, <code>'2'</code>=限价, <code>'3'</code>=最优价, <code>'4'</code>=最新价</td>
+</tr>
+<tr>
+<td><code>LimitPrice</code></td>
+<td>float</td>
+<td>限价时</td>
+<td>价格</td>
+</tr>
+<tr>
+<td><code>VolumeTotalOriginal</code></td>
+<td>int</td>
+<td>✅</td>
+<td>数量（手）</td>
+</tr>
+<tr>
+<td><code>TimeCondition</code></td>
+<td>str</td>
+<td>✅</td>
+<td>有效期类型：<code>'1'</code>=立即完成否则撤销(IOC), <code>'3'</code>=当日有效(GFD)</td>
+</tr>
+<tr>
+<td><code>VolumeCondition</code></td>
+<td>str</td>
+<td>✅</td>
+<td>成交量类型：<code>'1'</code>=任何数量, <code>'2'</code>=最小数量, <code>'3'</code>=全部数量(FOK)</td>
+</tr>
+<tr>
+<td><code>MinVolume</code></td>
+<td>int</td>
+<td></td>
+<td>最小成交量</td>
+</tr>
+<tr>
+<td><code>ContingentCondition</code></td>
+<td>str</td>
+<td>✅</td>
+<td>触发条件：<code>'1'</code>=立即</td>
+</tr>
+<tr>
+<td><code>ForceCloseReason</code></td>
+<td>str</td>
+<td>✅</td>
+<td>强平原因：<code>'0'</code>=非强平</td>
+</tr>
+<tr>
+<td><code>IsAutoSuspend</code></td>
+<td>int</td>
+<td></td>
+<td>自动挂起标志</td>
+</tr>
+<tr>
+<td><code>ExchangeID</code></td>
+<td>str</td>
+<td></td>
+<td>交易所代码</td>
+</tr>
+<tr>
+<td><code>AccountID</code></td>
+<td>str</td>
+<td></td>
+<td>资金账号</td>
+</tr>
+<tr>
+<td><code>CurrencyID</code></td>
+<td>str</td>
+<td></td>
+<td>币种</td>
+</tr>
+<tr>
+<td><code>ClientID</code></td>
+<td>str</td>
+<td></td>
+<td>客户代码</td>
+</tr>
+</tbody>
+</table>
+<h3 id="cthostftdcorderfield">CThostFtdcOrderField — 报单回报<a class="headerlink" href="#cthostftdcorderfield" title="Permanent link">&para;</a></h3>
+<p>包含 <code>InputOrderField</code> 的所有字段，额外增加：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>OrderSysID</code></td>
+<td>str</td>
+<td>报单编号（交易所分配）</td>
+</tr>
+<tr>
+<td><code>OrderStatus</code></td>
+<td>str</td>
+<td>报单状态（见下表）</td>
+</tr>
+<tr>
+<td><code>OrderSubmitStatus</code></td>
+<td>str</td>
+<td>报单提交状态</td>
+</tr>
+<tr>
+<td><code>StatusMsg</code></td>
+<td>str</td>
+<td>状态信息（中文）</td>
+</tr>
+<tr>
+<td><code>InsertDate</code></td>
+<td>str</td>
+<td>报单日期</td>
+</tr>
+<tr>
+<td><code>InsertTime</code></td>
+<td>str</td>
+<td>报单时间</td>
+</tr>
+<tr>
+<td><code>VolumeTraded</code></td>
+<td>int</td>
+<td>已成交量</td>
+</tr>
+<tr>
+<td><code>VolumeTotal</code></td>
+<td>int</td>
+<td>剩余量</td>
+</tr>
+<tr>
+<td><code>FrontID</code></td>
+<td>int</td>
+<td>前置编号</td>
+</tr>
+<tr>
+<td><code>SessionID</code></td>
+<td>int</td>
+<td>会话编号</td>
+</tr>
+<tr>
+<td><code>ExchangeID</code></td>
+<td>str</td>
+<td>交易所代码</td>
+</tr>
+</tbody>
+</table>
+<p><strong>OrderStatus 报单状态</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>值</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>'0'</code></td>
+<td>全部成交</td>
+</tr>
+<tr>
+<td><code>'1'</code></td>
+<td>部分成交还在队列中</td>
+</tr>
+<tr>
+<td><code>'2'</code></td>
+<td>部分成交不在队列中</td>
+</tr>
+<tr>
+<td><code>'3'</code></td>
+<td>未成交还在队列中</td>
+</tr>
+<tr>
+<td><code>'4'</code></td>
+<td>未成交不在队列中</td>
+</tr>
+<tr>
+<td><code>'5'</code></td>
+<td>撤单</td>
+</tr>
+<tr>
+<td><code>'a'</code></td>
+<td>未知（已提交未确认）</td>
+</tr>
+<tr>
+<td><code>'b'</code></td>
+<td>尚未触发</td>
+</tr>
+<tr>
+<td><code>'c'</code></td>
+<td>已触发</td>
+</tr>
+</tbody>
+</table>
+<h3 id="cthostftdctradefield">CThostFtdcTradeField — 成交回报<a class="headerlink" href="#cthostftdctradefield" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>InstrumentID</code></td>
+<td>str</td>
+<td>合约代码</td>
+</tr>
+<tr>
+<td><code>OrderRef</code></td>
+<td>str</td>
+<td>报单引用</td>
+</tr>
+<tr>
+<td><code>OrderSysID</code></td>
+<td>str</td>
+<td>报单编号</td>
+</tr>
+<tr>
+<td><code>TradeID</code></td>
+<td>str</td>
+<td>成交编号</td>
+</tr>
+<tr>
+<td><code>Direction</code></td>
+<td>str</td>
+<td>买卖方向</td>
+</tr>
+<tr>
+<td><code>OffsetFlag</code></td>
+<td>str</td>
+<td>开平标志</td>
+</tr>
+<tr>
+<td><code>HedgeFlag</code></td>
+<td>str</td>
+<td>投机套保标志</td>
+</tr>
+<tr>
+<td><code>Price</code></td>
+<td>float</td>
+<td>成交价格</td>
+</tr>
+<tr>
+<td><code>Volume</code></td>
+<td>int</td>
+<td>成交量（手）</td>
+</tr>
+<tr>
+<td><code>TradeDate</code></td>
+<td>str</td>
+<td>成交日期</td>
+</tr>
+<tr>
+<td><code>TradeTime</code></td>
+<td>str</td>
+<td>成交时间</td>
+</tr>
+<tr>
+<td><code>ExchangeID</code></td>
+<td>str</td>
+<td>交易所代码</td>
+</tr>
+<tr>
+<td><code>BrokerOrderSeq</code></td>
+<td>int</td>
+<td>经纪公司报单编号</td>
+</tr>
+<tr>
+<td><code>SequenceNo</code></td>
+<td>int</td>
+<td>序号</td>
+</tr>
+</tbody>
+</table>
+<h3 id="cthostftdcinputorderactionfield">CThostFtdcInputOrderActionField — 撤单请求<a class="headerlink" href="#cthostftdcinputorderactionfield" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>必填</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>BrokerID</code></td>
+<td>str</td>
+<td>✅</td>
+<td>经纪商代码</td>
+</tr>
+<tr>
+<td><code>InvestorID</code></td>
+<td>str</td>
+<td>✅</td>
+<td>投资者代码</td>
+</tr>
+<tr>
+<td><code>UserID</code></td>
+<td>str</td>
+<td>✅</td>
+<td>用户代码</td>
+</tr>
+<tr>
+<td><code>ActionFlag</code></td>
+<td>str</td>
+<td>✅</td>
+<td>操作标志：<code>'0'</code>=删除</td>
+</tr>
+<tr>
+<td><code>FrontID</code></td>
+<td>int</td>
+<td>方式一</td>
+<td>前置编号（登录时返回）</td>
+</tr>
+<tr>
+<td><code>SessionID</code></td>
+<td>int</td>
+<td>方式一</td>
+<td>会话编号（登录时返回）</td>
+</tr>
+<tr>
+<td><code>OrderRef</code></td>
+<td>str</td>
+<td>方式一</td>
+<td>报单引用</td>
+</tr>
+<tr>
+<td><code>ExchangeID</code></td>
+<td>str</td>
+<td>方式二</td>
+<td>交易所代码</td>
+</tr>
+<tr>
+<td><code>OrderSysID</code></td>
+<td>str</td>
+<td>方式二</td>
+<td>报单编号</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>撤单定位</strong>：可通过 <code>FrontID+SessionID+OrderRef</code>（方式一）或 <code>ExchangeID+OrderSysID</code>（方式二）定位要撤的报单。</p>
+</blockquote>
+<h3 id="cthostftdcinvestorpositionfield">CThostFtdcInvestorPositionField — 持仓<a class="headerlink" href="#cthostftdcinvestorpositionfield" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>InstrumentID</code></td>
+<td>str</td>
+<td>合约代码</td>
+</tr>
+<tr>
+<td><code>PosiDirection</code></td>
+<td>str</td>
+<td>持仓多空方向：<code>'2'</code>=多, <code>'3'</code>=空</td>
+</tr>
+<tr>
+<td><code>Position</code></td>
+<td>int</td>
+<td>总持仓量</td>
+</tr>
+<tr>
+<td><code>TodayPosition</code></td>
+<td>int</td>
+<td>今日持仓</td>
+</tr>
+<tr>
+<td><code>YdPosition</code></td>
+<td>int</td>
+<td>昨日持仓</td>
+</tr>
+<tr>
+<td><code>PositionDate</code></td>
+<td>str</td>
+<td>持仓日期类型：<code>'1'</code>=今日, <code>'2'</code>=历史</td>
+</tr>
+<tr>
+<td><code>OpenCost</code></td>
+<td>float</td>
+<td>开仓成本</td>
+</tr>
+<tr>
+<td><code>PositionCost</code></td>
+<td>float</td>
+<td>持仓成本</td>
+</tr>
+<tr>
+<td><code>UseMargin</code></td>
+<td>float</td>
+<td>占用保证金</td>
+</tr>
+<tr>
+<td><code>FrozenMargin</code></td>
+<td>float</td>
+<td>冻结保证金</td>
+</tr>
+<tr>
+<td><code>PositionProfit</code></td>
+<td>float</td>
+<td>持仓盈亏</td>
+</tr>
+<tr>
+<td><code>CloseProfit</code></td>
+<td>float</td>
+<td>平仓盈亏</td>
+</tr>
+<tr>
+<td><code>Commission</code></td>
+<td>float</td>
+<td>手续费</td>
+</tr>
+<tr>
+<td><code>OpenVolume</code></td>
+<td>int</td>
+<td>开仓量</td>
+</tr>
+<tr>
+<td><code>CloseVolume</code></td>
+<td>int</td>
+<td>平仓量</td>
+</tr>
+<tr>
+<td><code>ExchangeID</code></td>
+<td>str</td>
+<td>交易所代码</td>
+</tr>
+<tr>
+<td><code>HedgeFlag</code></td>
+<td>str</td>
+<td>投机套保标志</td>
+</tr>
+</tbody>
+</table>
+<h3 id="cthostftdctradingaccountfield">CThostFtdcTradingAccountField — 资金账户<a class="headerlink" href="#cthostftdctradingaccountfield" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>AccountID</code></td>
+<td>str</td>
+<td>账户编号</td>
+</tr>
+<tr>
+<td><code>Balance</code></td>
+<td>float</td>
+<td>期货结算准备金（动态权益）</td>
+</tr>
+<tr>
+<td><code>Available</code></td>
+<td>float</td>
+<td>可用资金</td>
+</tr>
+<tr>
+<td><code>PreBalance</code></td>
+<td>float</td>
+<td>上次结算准备金</td>
+</tr>
+<tr>
+<td><code>Deposit</code></td>
+<td>float</td>
+<td>入金金额</td>
+</tr>
+<tr>
+<td><code>Withdraw</code></td>
+<td>float</td>
+<td>出金金额</td>
+</tr>
+<tr>
+<td><code>CurrMargin</code></td>
+<td>float</td>
+<td>当前保证金总额</td>
+</tr>
+<tr>
+<td><code>FrozenMargin</code></td>
+<td>float</td>
+<td>冻结保证金</td>
+</tr>
+<tr>
+<td><code>Commission</code></td>
+<td>float</td>
+<td>手续费</td>
+</tr>
+<tr>
+<td><code>FrozenCommission</code></td>
+<td>float</td>
+<td>冻结手续费</td>
+</tr>
+<tr>
+<td><code>FrozenCash</code></td>
+<td>float</td>
+<td>冻结资金</td>
+</tr>
+<tr>
+<td><code>CloseProfit</code></td>
+<td>float</td>
+<td>平仓盈亏</td>
+</tr>
+<tr>
+<td><code>PositionProfit</code></td>
+<td>float</td>
+<td>持仓盈亏</td>
+</tr>
+<tr>
+<td><code>CashIn</code></td>
+<td>float</td>
+<td>资金差额</td>
+</tr>
+<tr>
+<td><code>Reserve</code></td>
+<td>float</td>
+<td>基本准备金</td>
+</tr>
+<tr>
+<td><code>CurrencyID</code></td>
+<td>str</td>
+<td>币种代码</td>
+</tr>
+<tr>
+<td><code>TradingDay</code></td>
+<td>str</td>
+<td>交易日</td>
+</tr>
+</tbody>
+</table>
+<h3 id="cthostftdcinstrumentfield">CThostFtdcInstrumentField — 合约信息<a class="headerlink" href="#cthostftdcinstrumentfield" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>InstrumentID</code></td>
+<td>str</td>
+<td>合约代码</td>
+</tr>
+<tr>
+<td><code>InstrumentName</code></td>
+<td>str</td>
+<td>合约名称</td>
+</tr>
+<tr>
+<td><code>ExchangeID</code></td>
+<td>str</td>
+<td>交易所代码</td>
+</tr>
+<tr>
+<td><code>ProductID</code></td>
+<td>str</td>
+<td>品种代码</td>
+</tr>
+<tr>
+<td><code>ProductClass</code></td>
+<td>str</td>
+<td>品种类型：<code>'1'</code>=期货, <code>'2'</code>=期权</td>
+</tr>
+<tr>
+<td><code>VolumeMultiple</code></td>
+<td>int</td>
+<td>合约乘数</td>
+</tr>
+<tr>
+<td><code>PriceTick</code></td>
+<td>float</td>
+<td>最小变动价位</td>
+</tr>
+<tr>
+<td><code>LongMarginRatio</code></td>
+<td>float</td>
+<td>多头保证金率</td>
+</tr>
+<tr>
+<td><code>ShortMarginRatio</code></td>
+<td>float</td>
+<td>空头保证金率</td>
+</tr>
+<tr>
+<td><code>MaxLimitOrderVolume</code></td>
+<td>int</td>
+<td>限价单最大下单量</td>
+</tr>
+<tr>
+<td><code>MinLimitOrderVolume</code></td>
+<td>int</td>
+<td>限价单最小下单量</td>
+</tr>
+<tr>
+<td><code>MaxMarketOrderVolume</code></td>
+<td>int</td>
+<td>市价单最大下单量</td>
+</tr>
+<tr>
+<td><code>MinMarketOrderVolume</code></td>
+<td>int</td>
+<td>市价单最小下单量</td>
+</tr>
+<tr>
+<td><code>IsTrading</code></td>
+<td>int</td>
+<td>当前是否交易</td>
+</tr>
+<tr>
+<td><code>OpenDate</code></td>
+<td>str</td>
+<td>上市日</td>
+</tr>
+<tr>
+<td><code>ExpireDate</code></td>
+<td>str</td>
+<td>到期日</td>
+</tr>
+<tr>
+<td><code>DeliveryYear</code></td>
+<td>int</td>
+<td>交割年份</td>
+</tr>
+<tr>
+<td><code>DeliveryMonth</code></td>
+<td>int</td>
+<td>交割月</td>
+</tr>
+<tr>
+<td><code>OptionsType</code></td>
+<td>str</td>
+<td>期权类型：<code>'1'</code>=看涨, <code>'2'</code>=看跌</td>
+</tr>
+<tr>
+<td><code>StrikePrice</code></td>
+<td>float</td>
+<td>执行价（期权）</td>
+</tr>
+<tr>
+<td><code>UnderlyingInstrID</code></td>
+<td>str</td>
+<td>标的合约（期权）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="cthostftdcsettlementinfoconfirmfield">CThostFtdcSettlementInfoConfirmField — 结算确认请求<a class="headerlink" href="#cthostftdcsettlementinfoconfirmfield" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>必填</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>BrokerID</code></td>
+<td>str</td>
+<td>✅</td>
+<td>经纪商代码</td>
+</tr>
+<tr>
+<td><code>InvestorID</code></td>
+<td>str</td>
+<td>✅</td>
+<td>投资者代码</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_16">查询请求字段<a class="headerlink" href="#_16" title="Permanent link">&para;</a></h3>
+<h4 id="cthostftdcqryinstrumentfield">CThostFtdcQryInstrumentField<a class="headerlink" href="#cthostftdcqryinstrumentfield" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>InstrumentID</code></td>
+<td>str</td>
+<td>合约代码（空=查全部）</td>
+</tr>
+<tr>
+<td><code>ExchangeID</code></td>
+<td>str</td>
+<td>交易所代码（空=查全部）</td>
+</tr>
+<tr>
+<td><code>ProductID</code></td>
+<td>str</td>
+<td>品种代码（空=查全部）</td>
+</tr>
+</tbody>
+</table>
+<h4 id="cthostftdcqrytradingaccountfield">CThostFtdcQryTradingAccountField<a class="headerlink" href="#cthostftdcqrytradingaccountfield" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>BrokerID</code></td>
+<td>str</td>
+<td>经纪商代码</td>
+</tr>
+<tr>
+<td><code>InvestorID</code></td>
+<td>str</td>
+<td>投资者代码</td>
+</tr>
+<tr>
+<td><code>CurrencyID</code></td>
+<td>str</td>
+<td>币种代码</td>
+</tr>
+</tbody>
+</table>
+<h4 id="cthostftdcqryinvestorpositionfield">CThostFtdcQryInvestorPositionField<a class="headerlink" href="#cthostftdcqryinvestorpositionfield" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>BrokerID</code></td>
+<td>str</td>
+<td>经纪商代码</td>
+</tr>
+<tr>
+<td><code>InvestorID</code></td>
+<td>str</td>
+<td>投资者代码</td>
+</tr>
+<tr>
+<td><code>InstrumentID</code></td>
+<td>str</td>
+<td>合约代码（空=查全部）</td>
+</tr>
+<tr>
+<td><code>ExchangeID</code></td>
+<td>str</td>
+<td>交易所代码</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
