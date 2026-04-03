@@ -43,6 +43,7 @@ from . import (
     CThostFtdcQryTradingAccountField,
     CThostFtdcQryInvestorPositionField,
 )
+from .proxy import create_tunnel_if_needed
 
 
 def _flow_dir(prefix):
@@ -107,11 +108,14 @@ class MdClient:
         password: 密码
     """
 
-    def __init__(self, front, broker_id, user_id, password):
+    def __init__(self, front, broker_id, user_id, password,
+                 proxy=None, auto_tunnel=True):
         self.front = front
         self.broker_id = broker_id
         self.user_id = user_id
         self.password = password
+        self.proxy = proxy
+        self.auto_tunnel = auto_tunnel
 
         self.on_tick = None     # callback(CThostFtdcDepthMarketDataField)
         self.on_login = None    # callback(CThostFtdcRspUserLoginField)
@@ -123,6 +127,29 @@ class MdClient:
         self._api = None
         self._spi = None
         self._thread = None
+        self._effective_front = front
+        self._front_tunnel = None
+
+    def _resolve_front(self):
+        self._close_front_tunnel()
+        self._effective_front = self.front
+        if not self.auto_tunnel or not self.front:
+            return self.front
+        effective_front, tunnel = create_tunnel_if_needed(self.front, proxy=self.proxy)
+        self._effective_front = effective_front
+        self._front_tunnel = tunnel
+        return effective_front
+
+    def _close_front_tunnel(self):
+        tunnel = self._front_tunnel
+        self._front_tunnel = None
+        self._effective_front = self.front
+        if tunnel is None:
+            return
+        try:
+            tunnel.stop()
+        except Exception:
+            pass
 
     def subscribe(self, instruments):
         """订阅合约列表（可在 start 前或后调用）"""
@@ -137,10 +164,11 @@ class MdClient:
             block: True=阻塞直到断开, False=后台线程运行
         """
         flow = _flow_dir(f"md_{self.broker_id}_{self.user_id}")
+        front = self._resolve_front()
         self._api = CThostFtdcMdApi.CreateFtdcMdApi(flow)
         self._spi = _MdSpi(self)
         self._api.RegisterSpi(self._spi)
-        self._api.RegisterFront(self.front)
+        self._api.RegisterFront(front)
         self._api.Init()
 
         if block:
@@ -165,14 +193,21 @@ class MdClient:
 
     def stop(self):
         """停止并释放资源"""
-        if self._api:
-            self._api.RegisterSpi(None)
-            self._api.Release()
-            self._api = None
+        try:
+            if self._api:
+                self._api.RegisterSpi(None)
+                self._api.Release()
+                self._api = None
+        finally:
+            self._close_front_tunnel()
 
     @property
     def is_ready(self):
         return self._connected and self._loggedin
+
+    @property
+    def effective_front(self):
+        return self._effective_front
 
 
 # ===========================================================================
@@ -265,13 +300,16 @@ class TraderClient:
     """
 
     def __init__(self, front, broker_id, user_id, password,
-                 app_id="simnow_client_test", auth_code="0000000000000000"):
+                 app_id="simnow_client_test", auth_code="0000000000000000",
+                 proxy=None, auto_tunnel=True):
         self.front = front
         self.broker_id = broker_id
         self.user_id = user_id
         self.password = password
         self.app_id = app_id
         self.auth_code = auth_code
+        self.proxy = proxy
+        self.auto_tunnel = auto_tunnel
 
         self.on_login = None   # callback(CThostFtdcRspUserLoginField)
         self.on_order = None   # callback(CThostFtdcOrderField)
@@ -289,16 +327,40 @@ class TraderClient:
         self._query_done = threading.Event()
         self._last_account = None
         self._last_positions = []
+        self._effective_front = front
+        self._front_tunnel = None
+
+    def _resolve_front(self):
+        self._close_front_tunnel()
+        self._effective_front = self.front
+        if not self.auto_tunnel or not self.front:
+            return self.front
+        effective_front, tunnel = create_tunnel_if_needed(self.front, proxy=self.proxy)
+        self._effective_front = effective_front
+        self._front_tunnel = tunnel
+        return effective_front
+
+    def _close_front_tunnel(self):
+        tunnel = self._front_tunnel
+        self._front_tunnel = None
+        self._effective_front = self.front
+        if tunnel is None:
+            return
+        try:
+            tunnel.stop()
+        except Exception:
+            pass
 
     def start(self, block=False):
         """启动连接（默认后台运行）"""
         flow = _flow_dir(f"td_{self.broker_id}_{self.user_id}")
+        front = self._resolve_front()
         self._api = CThostFtdcTraderApi.CreateFtdcTraderApi(flow)
         self._spi = _TraderSpi(self)
         self._api.RegisterSpi(self._spi)
         self._api.SubscribePrivateTopic(2)
         self._api.SubscribePublicTopic(2)
-        self._api.RegisterFront(self.front)
+        self._api.RegisterFront(front)
         self._api.Init()
 
         if block:
@@ -356,11 +418,18 @@ class TraderClient:
 
     def stop(self):
         """停止并释放资源"""
-        if self._api:
-            self._api.RegisterSpi(None)
-            self._api.Release()
-            self._api = None
+        try:
+            if self._api:
+                self._api.RegisterSpi(None)
+                self._api.Release()
+                self._api = None
+        finally:
+            self._close_front_tunnel()
 
     @property
     def is_ready(self):
         return self._connected and self._ready
+
+    @property
+    def effective_front(self):
+        return self._effective_front

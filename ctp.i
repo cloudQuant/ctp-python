@@ -23,9 +23,16 @@ from traceback import print_exc, print_exception
 %pythoncode %{
 def _swig_repr(self):
     values = []
-    for k in vars(self.__class__):
-        if not k.startswith('_'):
-            v = getattr(self, k)
+    try:
+        for k in vars(self.__class__):
+            if k.startswith('_'):
+                continue
+            try:
+                v = getattr(self, k)
+            except Exception:
+                continue
+            if callable(v):
+                continue
             if isinstance(v, float):
                 if v == float_info.max:
                     values.append("%s: None" % k)
@@ -35,8 +42,12 @@ def _swig_repr(self):
                 values.append("%s: %i" % (k, v))
             else:
                 values.append('%s: "%s"' % (k, v))
+    except Exception:
+        pass
 
-    return "<%s.%s; %s>" % (self.__class__.__module__, self.__class__.__name__, ', '.join(values))
+    if values:
+        return "<%s.%s; %s>" % (self.__class__.__module__, self.__class__.__name__, ', '.join(values))
+    return object.__repr__(self)
 %}
 
 %{
@@ -45,7 +56,11 @@ def _swig_repr(self):
 #include "ThostFtdcUserApiStruct.h"
 #include "ThostFtdcMdApi.h"
 #include "ThostFtdcTraderApi.h"
-#include "iconv.h"
+#ifdef CTP_ICONV_HEADER
+#include CTP_ICONV_HEADER
+#else
+#include <iconv.h>
+#endif
 %}
 
 %feature("director:except") {
@@ -136,25 +151,13 @@ def _swig_repr(self):
     }
 }
 
-%{
-/* Cached iconv handle for GBK→UTF-8 conversion (avoids repeated open/close) */
-static iconv_t _ctp_iconv_handle = (iconv_t)-1;
-
-static iconv_t _ctp_get_iconv() {
-    if (_ctp_iconv_handle == (iconv_t)-1) {
-        _ctp_iconv_handle = iconv_open("UTF-8", "GBK");
-    }
-    return _ctp_iconv_handle;
-}
-%}
-
 %typemap(out) char[ANY], char[] {
     if ($1) {
         size_t inlen = strlen($1);
         if (inlen == 0) {
             $result = SWIG_FromCharPtr("");
         } else {
-            iconv_t conv = _ctp_get_iconv();
+            iconv_t conv = iconv_open("UTF-8", "GBK");
             if (conv == (iconv_t)-1) {
                 $result = SWIG_FromCharPtr($1);
                 if (PyErr_WarnEx(PyExc_UnicodeWarning, "Failed to initialize iconv.", 1) < 0) {
@@ -167,10 +170,10 @@ static iconv_t _ctp_get_iconv() {
                 char *out = buf;
 
                 if (iconv(conv, in, &inlen, &out, &outlen) != (size_t)-1) {
+                    iconv_close(conv);
                     $result = SWIG_FromCharPtrAndSize(buf, sizeof buf - outlen);
                 } else {
-                    /* Reset iconv state on error */
-                    iconv(conv, NULL, NULL, NULL, NULL);
+                    iconv_close(conv);
                     $result = SWIG_FromCharPtr($1);
                     if (PyErr_WarnEx(PyExc_UnicodeWarning, "Failed to convert '$1_name' from GBK to UTF-8.", 1) < 0) {
                         return NULL;

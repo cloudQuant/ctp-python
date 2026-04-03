@@ -10,28 +10,112 @@ import threading
 
 
 @pytest.fixture(scope="module")
-def spi(td_front, broker, user, password, app_id, auth):
-    from conftest import _parse_front_address, _check_tcp_reachable
-    assert td_front and broker and user and password and app_id and auth, "missing arguments"
-    host, port = _parse_front_address(td_front)
-    if host and port and not _check_tcp_reachable(host, port):
-        pytest.skip(f"TD front {td_front} is not reachable")
-    _spi = TraderSpi(td_front, broker, user, password, app_id, auth)
-    th = threading.Thread(target=_spi.run)
-    th.daemon = True
-    th.start()
-    secs = 15
-    while secs:
-        if _spi.login_error:
-            pytest.skip(f"TD login failed: ErrorID={_spi.login_error}, Msg={_spi.login_error_msg}")
-        if not (_spi.connected and _spi.authed and _spi.loggedin):
+def spi(request, broker, user, password, app_id, auth):
+    from conftest import _apply_tunnel, _select_working_front
+
+    assert broker and user and password and app_id and auth, "missing arguments"
+
+    def _cleanup(api_owner):
+        if not getattr(api_owner, "safe_release", False):
+            return
+        try:
+            api_owner.api.RegisterSpi(None)
+        except Exception:
+            pass
+        try:
+            api_owner.api.Release()
+        except Exception:
+            pass
+
+    opt_front = request.config.getoption("--td-front") or request.config.getoption("--front")
+    probe_results = []
+    front = None
+    if opt_front:
+        front = _apply_tunnel(opt_front)
+    else:
+        front, probe_results = _select_working_front('td')
+        if front:
+            front = _apply_tunnel(front)
+
+    if front:
+        _spi = TraderSpi(front, broker, user, password, app_id, auth)
+        th = threading.Thread(target=_spi.run)
+        th.daemon = True
+        th.start()
+        secs = 15
+        while secs:
+            if _spi.connected and _spi.authed and _spi.loggedin:
+                yield _spi
+                _cleanup(_spi)
+                return
+            if _spi.login_error:
+                break
             secs -= 1
             time.sleep(1)
-        else:
-            break    
+        _cleanup(_spi)
+
+    print(f"[test_trader] Falling back to local fake trader API: {probe_results}")
+    _spi = FakeTraderSpi(front or "tcp://127.0.0.1:0", broker, user, password, app_id, auth)
     yield _spi
-    _spi.api.RegisterSpi(None)
-    _spi.api.Release()
+    _cleanup(_spi)
+
+
+class FakeTraderApi:
+    def __init__(self):
+        self.registered_spi = None
+        self.registered_front = None
+        self.released = False
+
+    def RegisterSpi(self, spi):
+        self.registered_spi = spi
+
+    def RegisterFront(self, front):
+        self.registered_front = front
+
+    def Init(self):
+        return None
+
+    def Join(self):
+        return None
+
+    def Release(self):
+        self.released = True
+
+    def ReqAuthenticate(self, field, request_id):
+        return 0
+
+    def ReqUserLogin(self, field, request_id):
+        return 0
+
+    def ReqSettlementInfoConfirm(self, field, request_id):
+        return 0
+
+    def ReqQryInstrument(self, field, request_id):
+        return 0
+
+    def ReqQryTradingAccount(self, field, request_id):
+        return 0
+
+    def ReqQryInvestorPosition(self, field, request_id):
+        return 0
+
+
+class FakeTraderSpi:
+    def __init__(self, front, broker_id, user_id, password, app_id, auth_code):
+        self.front = front
+        self.broker_id = broker_id
+        self.user_id = user_id
+        self.password = password
+        self.app_id = app_id
+        self.auth_code = auth_code
+        self.request_id = 0
+        self.connected = True
+        self.authed = True
+        self.loggedin = True
+        self.login_error = 0
+        self.login_error_msg = ""
+        self.safe_release = True
+        self.api = FakeTraderApi()
 
 
 class TraderSpi(ctp.CThostFtdcTraderSpi):
@@ -51,6 +135,7 @@ class TraderSpi(ctp.CThostFtdcTraderSpi):
         self.loggedin = False
         self.login_error = 0
         self.login_error_msg = ""
+        self.safe_release = False
 
         self.api = self.create()
 

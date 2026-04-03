@@ -3,16 +3,20 @@ import glob
 import os
 import pathlib
 import shutil
+import subprocess
 import sys
 import sysconfig
 from distutils import dist
 
 from setuptools import Extension, find_packages, setup
+from setuptools.command.build_ext import build_ext
 from setuptools.command.build_py import build_py
 
 API_VER = os.environ.get("API_VER", "6.7.7")
 REVISION = ""
-BUILD_VER = API_VER + "." + REVISION if REVISION else API_VER
+BUILD_VER = os.environ.get("BUILD_VER") or (
+    API_VER + "." + REVISION if REVISION else API_VER
+)
 
 # Get the long description from relevant files
 with open("README.md", encoding="utf-8") as f:
@@ -32,7 +36,22 @@ if sys.platform.startswith("darwin"):
             os.path.join(API_DIR, "thosttraderapi_se.framework/Versions/A/Headers"),
         ]
         LIB_DIRS = [API_DIR]
-        LIB_NAMES = ["iconv"]
+        # The 6.7.7+ macOS frameworks already carry their own dependencies.
+        # Linking libiconv here makes local builds pick up a machine-specific
+        # absolute path (for example /usr/local/lib/libiconv.2.dylib), while
+        # the published PyPI wheels do not depend on it.
+        LIB_NAMES = []
+        sdk_iconv_header = None
+        try:
+            sdk_root = os.environ.get("SDKROOT") or subprocess.check_output(
+                ["xcrun", "--sdk", "macosx", "--show-sdk-path"],
+                text=True,
+            ).strip()
+            candidate = os.path.join(sdk_root, "usr", "include", "iconv.h")
+            if os.path.exists(candidate):
+                sdk_iconv_header = candidate
+        except Exception:
+            pass
         # Get direct paths to the framework libraries
         MD_LIB = os.path.join(
             API_DIR, "thostmduserapi_se.framework/Versions/A/thostmduserapi_se"
@@ -47,6 +66,8 @@ if sys.platform.startswith("darwin"):
             TRADER_LIB,
         ]
         COMPILE_ARGS = []
+        if sdk_iconv_header:
+            COMPILE_ARGS.append(f'-DCTP_ICONV_HEADER="{sdk_iconv_header}"')
         # Define framework files for package_data
         FRAMEWORK_FILES = ["*.framework", "*.framework/**/*"]
     else:
@@ -54,7 +75,7 @@ if sys.platform.startswith("darwin"):
         API_LIBS = glob.glob(API_DIR + "/*.a")
         INC_DIRS = [API_DIR]
         LIB_DIRS = [API_DIR]
-        LIB_NAMES = []
+        LIB_NAMES = ["iconv"]
         LINK_ARGS = ["-Wl,-rpath,$ORIGIN"]
         LINK_ARGS.extend(API_LIBS)
         COMPILE_ARGS = []
@@ -109,6 +130,11 @@ else:
 
 class BuildPy(build_py):
     def run(self):
+        build_base = self.get_finalized_command("build").build_base
+        if os.path.isdir(build_base):
+            shutil.rmtree(build_base)
+        if os.path.exists("ctp.py"):
+            os.remove("ctp.py")
         self.run_command("build_ext")
         result = super().run()
 
@@ -145,6 +171,12 @@ class BuildPy(build_py):
                         ignore=ignore_dsstore,
                     )
         return result
+
+
+class BuildExt(build_ext):
+    def finalize_options(self):
+        super().finalize_options()
+        self.force = True
 
 
 CTP_EXT = Extension(
@@ -187,6 +219,7 @@ try:
             "Programming Language :: Python :: Implementation :: CPython",
         ],
         cmdclass={
+            "build_ext": BuildExt,
             "build_py": BuildPy,
         },
     )
