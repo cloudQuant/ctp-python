@@ -13,3 +13,6 @@ artifact/
 site/
 _bmad/
 .windsurf/
+.vscode/
+ctp/_ctp*.so
+ctp/*.framework/

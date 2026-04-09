@@ -46,6 +46,7 @@ HONGYUAN_FRONTS = {
 
 _PROBED_FRONTS = {}
 _ACTIVE_TUNNELS = []  # keep references so tunnels stay alive
+_LIVE_PROBES = []
 
 # Detect proxy once at import time
 _PROXY = detect_http_proxy()
@@ -201,14 +202,7 @@ def _probe_md_front(front_uri, broker, user, password, timeout=8):
     )
     thread.start()
     done.wait(timeout)
-    try:
-        spi.api.RegisterSpi(None)
-    except Exception:
-        pass
-    try:
-        spi.api.Release()
-    except Exception:
-        pass
+    _LIVE_PROBES.append((spi, thread))
     return result
 
 
@@ -279,14 +273,7 @@ def _probe_td_front(front_uri, broker, user, password, app_id, auth, timeout=10)
     )
     thread.start()
     done.wait(timeout)
-    try:
-        spi.api.RegisterSpi(None)
-    except Exception:
-        pass
-    try:
-        spi.api.Release()
-    except Exception:
-        pass
+    _LIVE_PROBES.append((spi, thread))
     return result
 
 
